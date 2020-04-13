@@ -1,0 +1,12 @@
+remotePath: 'https://github.com/NB-Super-Mario/template/master/template.yml'
+list:
+  template_4_h5:
+    git: 'https://github.com/NB-Super-Mario/template_4_h5#TEMPLATE_4_H5_tag_V1.0.0'
+    name: 'h5项目react基础模版'
+    desc: 'react+antd mobile+less+webpack h5基础模版'
+    readme: 'https://github.com/NB-Super-Mario/template_4_h5'
+  template_4_pc:
+    git: 'https://github.com/NB-Super-Mario/template_4_pc#TEMPLATE_4_PC_tag_V1.0.0'
+    name: 'pc项目react基础模版'
+    desc: 'react+antd +less+webpack PC基础模版'
+    readme: 'https://github.com/NB-Super-Mario/template_4_pc'
