@@ -1,6 +1,6 @@
 {
-  "name": "@mario/cli",
-  "version": "1.0.0",
+  "name": "@nbsupermario/cli",
+  "version": "1.0.1",
   "description": "脚手架",
   "main": "./lib/index.js",
   "scripts": {
@@ -123,17 +123,17 @@
     "cli",
     "mario"
   ],
-  "author": "nbsupermario",
+  "author": "ly.boy2012@gmail.com",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/NB-Super-Mario/cli/issues"
   },
   "homepage": "https://github.com/NB-Super-Mario/cli#readme",
   "bin": {
-    "m": "./bin/m",
-    "mdev": "./bin/mc-dev",
-    "mbuild": "./bin/m-build",
-    "mserve": "./bin/m-serve",
-    "mupdate": "./bin/m-update"
+    "sm": "./bin/nsm",
+    "smdev": "./bin/nsm-dev",
+    "smbuild": "./bin/nsm-build",
+    "smserve": "./bin/nsm-serve",
+    "smupdate": "./bin/nsm-update"
   }
 }
