@@ -13,7 +13,7 @@ import { babelOpts } from './util';
 
 const tsImportPluginFactory = require('ts-import-plugin');
 
-const log = debug('i-cli:base');
+const log = debug('mario-cli:base');
 
 const getConfig = (opts: any = {}): Config => {
   const cwd = opts.cwd || process.cwd();
@@ -51,7 +51,7 @@ const getConfig = (opts: any = {}): Config => {
         base_home: `${conf.domain}${conf.prefixTarget}`,
         timestamp: `${new Date().getTime()}`,
         alwaysWriteToDisk: conf.alwaysWriteToDisk,
-        minify: conf.minify
+        minify: conf.minify,
         /* minify: {
           removeComments: true,
           collapseWhitespace: true,
@@ -96,7 +96,7 @@ const getConfig = (opts: any = {}): Config => {
       '.jpg',
       '.less',
       '.scss',
-      '.sass'
+      '.sass',
     ]);
   config.externals(conf.externals);
   Object.keys(conf.alias).forEach(name => {
@@ -137,15 +137,15 @@ const getConfig = (opts: any = {}): Config => {
             {
               libraryName: 'antd-mobile',
               libraryDirectory: 'es', // lib antd 嵌套会报错
-              style: true
+              style: true,
             },
             {
               libraryName: 'antd',
               libraryDirectory: 'es', // lib antd 嵌套会报错
-              style: true
-            }
-          ])
-        ]
+              style: true,
+            },
+          ]),
+        ],
       }),
       // ref: https://github.com/TypeStrong/ts-loader/blob/fbed24b/src/utils.ts#L23
       errorFormatter(error, colors) {
@@ -166,7 +166,7 @@ const getConfig = (opts: any = {}): Config => {
           messageColor(`      TS${error.code}: ${error.content}`)
         );
       },
-      ...(opts.typescript || {})
+      ...(opts.typescript || {}),
     });
 
   // Create named rules which can be modified later
@@ -179,7 +179,7 @@ const getConfig = (opts: any = {}): Config => {
     .options({
       limit: 10000,
       minetype: 'images/jpg',
-      name: `${conf.prefixTarget}img/[name]_[hash].[ext]`
+      name: `${conf.prefixTarget}img/[name]_[hash].[ext]`,
     });
 
   config.module
@@ -190,7 +190,7 @@ const getConfig = (opts: any = {}): Config => {
     .loader('url-loader')
     .options({
       limit: 8421,
-      name: `${conf.prefixTarget}fonts/[name].[ext]`
+      name: `${conf.prefixTarget}fonts/[name].[ext]`,
     });
 
   config.plugin('copy-public').use(require('copy-webpack-plugin'), [
@@ -200,7 +200,7 @@ const getConfig = (opts: any = {}): Config => {
         to: `${conf.prefixTarget}lib`,
         ignore: ['*.json'],
         debug: 'info',
-        context: cwd
+        context: cwd,
       },
       {
         from: join(opts.src, 'scripts', 'lib', 'min'),
@@ -208,20 +208,20 @@ const getConfig = (opts: any = {}): Config => {
         ignore: ['*.json'],
         debug: 'info',
         context: cwd,
-        flatten: true
+        flatten: true,
       },
       { from: 'src/static-res/favicon.ico', to: 'favicon.ico' },
       { from: 'src/static-res/healthCheck.html', to: 'healthCheck.html' },
-      ...conf.copyRes
-    ]
+      ...conf.copyRes,
+    ],
   ]);
 
   Object.keys(conf.dllEntry).forEach(name => {
     config.plugin('dll-reference').use(webpack.DllReferencePlugin, [
       {
         context: cwd,
-        manifest: require(join(opts.dllOutput, `${name}-manifest.json`))
-      }
+        manifest: require(join(opts.dllOutput, `${name}-manifest.json`)),
+      },
     ]);
   });
 
@@ -229,7 +229,7 @@ const getConfig = (opts: any = {}): Config => {
     .plugin('momentPlugin')
     .use(webpack.ContextReplacementPlugin, [
       /moment[\\/]locale$/,
-      /^\.\/(zh-cn|en)$/
+      /^\.\/(zh-cn|en)$/,
     ]);
   config
     .plugin('.providePlugin')

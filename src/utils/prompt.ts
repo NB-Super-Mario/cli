@@ -12,8 +12,8 @@ export const confirm = async (message): Promise<inquirer.Answers> => {
     {
       type: 'confirm',
       name: 'confirm',
-      message
-    }
+      message,
+    },
   ]);
   return result;
 };

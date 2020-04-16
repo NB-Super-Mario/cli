@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2020-present liying Holding Limited
+ * @author liying <ly.boy2012@gmail.com>
+ * @Description:编译打包
+ * @Date: 2020-04-14 12:20:36
+ */
+
 import webpack from 'webpack';
 import chalk from 'chalk';
 import debug from 'debug';
@@ -5,7 +12,7 @@ import debug from 'debug';
 import getProdConfig from './webpack/prod';
 import getProdDllConfig from './webpack/prod.dll';
 
-const log = debug('i-cli:build');
+const log = debug('mario-cli:build');
 
 /* if (conf.isDll) {
 
@@ -33,7 +40,7 @@ webpack(getProdDllConfig().toConfig(), (err, stats) => {
         modules: false,
         children: false,
         chunks: false,
-        chunkModules: false
+        chunkModules: false,
       })}\n\n`
     );
 

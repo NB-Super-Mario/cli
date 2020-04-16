@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2020-present liying Holding Limited
+ * @author liying <ly.boy2012@gmail.com>
+ * @Description: 本地服务预览
+ * @Date: 2020-04-14 12:22:13
+ */
+
 import connect from 'connect';
 import http from 'http';
 import chalk from 'chalk';
@@ -21,13 +28,13 @@ app.use(compression());
 
 app.use(
   cookieSession({
-    keys: ['secret1', 'secret2']
+    keys: ['secret1', 'secret2'],
   })
 );
 
 app.use(
   serveStatic(`target/${conf.pkg.name}`, {
-    index: [conf.indexPage || 'home.html']
+    index: [conf.indexPage || 'home.html'],
   })
 );
 

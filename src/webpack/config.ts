@@ -2,6 +2,8 @@ import { resolve } from 'path';
 import { existsSync } from 'fs';
 import config from 'config';
 
+import { DefinePlugin } from 'webpack';
+
 const domain = config.get('domain');
 const hostname = config.get('hostname');
 const isOpenBrowser = config.get('isOpenBrowser');
@@ -13,15 +15,15 @@ const PREFIX_TARGET = '';
 const defaultAppConfig = {
   definePlugin: [
     {
-      DOMAIN: JSON.stringify(domain)
-    }
+      DOMAIN: JSON.stringify(domain),
+    },
   ],
   alias: {
     '@components': resolve(cwd, 'src/scripts/components'),
     '@actions': resolve(cwd, 'src/scripts/actions'),
     '@api': resolve(cwd, 'src/scripts/api'),
     '@routes': resolve(cwd, 'src/scripts/routes'),
-    '@util': resolve(cwd, 'src/scripts/util')
+    '@util': resolve(cwd, 'src/scripts/util'),
   },
   domain,
   hostname,
@@ -37,8 +39,8 @@ const defaultAppConfig = {
       'react-router-dom',
       'redux',
       'react-redux',
-      'connected-react-router'
-    ]
+      'connected-react-router',
+    ],
   },
   dllOutput: resolve(cwd, 'src', 'dll'),
   provideDefs: {},
@@ -47,18 +49,18 @@ const defaultAppConfig = {
   minify: {
     removeComments: true,
     collapseWhitespace: true,
-    removeAttributeQuotes: true
+    removeAttributeQuotes: true,
   },
   copyRes: [
     { from: 'src/static-res/mock', to: `${PREFIX_TARGET}static-mock` },
     { from: 'src/static-res/img', to: `${PREFIX_TARGET}static-img` },
-    { from: 'src/static-res/css', to: `${PREFIX_TARGET}static-css` }
+    { from: 'src/static-res/css', to: `${PREFIX_TARGET}static-css` },
     // { from: 'src/static-res/icons', to: `static-icons` }
   ],
   dev: {
     publicPath: domain,
     output: resolve(cwd, '__build'),
-    isOpenBrowser
+    isOpenBrowser,
   },
   build: {
     publicPath: domain,
@@ -66,15 +68,15 @@ const defaultAppConfig = {
     bundleAnalyzerReport: process.env.npm_config_report,
     productionGzip: true,
     combo: false,
-    chunkhash: true
+    chunkhash: true,
   },
   isAntd: false,
   isBootstrap: false,
-  indexPage: 'home.html'
+  indexPage: 'home.html',
 };
 type BaseConf = {
   definePlugin: {
-    [key: string]: any;
+    [key: string]: DefinePlugin.CodeValueObject;
   }[];
   alias: {
     [key: string]: string;

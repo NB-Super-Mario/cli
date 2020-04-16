@@ -4,9 +4,9 @@ import webpack from 'webpack';
 import debug from 'debug';
 import conf from './config';
 
-const log = debug('i-cli:dev-dll');
+const log = debug('mario-cli:dev-dll');
 const getDevDllConfig = (opts: any = {}): Config => {
-  console.log(opts);
+  log(`opts ${opts}`);
   const devDllConfig = new Config();
   const cwd = conf.cwd;
 
@@ -36,8 +36,8 @@ const getDevDllConfig = (opts: any = {}): Config => {
     {
       path: join(conf.dllOutput, '[name]-manifest.json'),
       name: '[name]',
-      context: cwd
-    }
+      context: cwd,
+    },
   ]);
   devDllConfig
     .plugin('.providePlugin')

@@ -23,12 +23,12 @@ const getDevConfig = (opts: any = {}): Config => {
   const happyThreadPool = HappyPack.ThreadPool({ size: 5 });
   const devConfig: Config = getConfig({
     config: {
-      domain: opts.domain
+      domain: opts.domain,
     },
     cwd,
     src,
     entry: 'src/scripts/entry',
-    dllOutput: resolve(src, 'dll')
+    dllOutput: resolve(src, 'dll'),
   });
 
   devConfig.mode('development');
@@ -56,13 +56,13 @@ const getDevConfig = (opts: any = {}): Config => {
     .use('css-loader')
     .loader('css-loader')
     .options({
-      sourceMap: true
+      sourceMap: true,
     })
     .end()
     .use('postcss-loader')
     .loader('postcss-loader')
     .options({
-      sourceMap: 'inline'
+      sourceMap: 'inline',
     });
 
   /* if (conf.isBootstrap) {
@@ -117,10 +117,10 @@ const getDevConfig = (opts: any = {}): Config => {
       loaders: [
         {
           loader: 'babel-loader',
-          options: babelOpts
-        }
-      ]
-    }
+          options: babelOpts,
+        },
+      ],
+    },
   ]);
   devConfig.plugin('happypack-styles').use(HappyPack, [
     {
@@ -133,41 +133,41 @@ const getDevConfig = (opts: any = {}): Config => {
           options: {
             // sourceMap: true
             //  singleton: true
-          }
+          },
         },
         {
           loader: 'css-loader',
           options: {
             // importLoaders: 1
             // minimize: true ,
-            sourceMap: true
-          }
+            sourceMap: true,
+          },
         },
         {
           loader: 'less-loader',
           options: {
             sourceMap: true,
             javascriptEnabled: true,
-            modifyVars: theme
-          }
-        }
-      ]
-    }
+            modifyVars: theme,
+          },
+        },
+      ],
+    },
   ]);
-
-  devConfig.plugin('define').use(webpack.DefinePlugin, conf.definePlugin);
+  // eslint-disable-next-line
+  devConfig.plugin('define').use<any>(webpack.DefinePlugin, conf.definePlugin);
 
   devConfig.plugin('htmlWebpackHarddisk').use(HtmlWebpackHarddiskPlugin, [
     {
-      outputPath: '__build'
-    }
+      outputPath: '__build',
+    },
   ]);
 
   if (conf.dev.isOpenBrowser)
     devConfig
       .plugin('openBrowserPlugin')
       .use(OpenBrowserPlugin, [
-        { url: `http:${conf.domain}${conf.indexPage}` }
+        { url: `http:${conf.domain}${conf.indexPage}` },
       ]);
   devConfig.devtool('cheap-module-eval-source-map');
   return devConfig;

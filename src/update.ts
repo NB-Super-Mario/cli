@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2020-present liying Holding Limited
+ * @author liying <ly.boy2012@gmail.com>
+ * @Description: 更新代码模版
+ * @Date: 2020-04-14 12:22:34
+ */
+
 import ora from 'ora';
 
 import path from 'path';
@@ -6,12 +13,12 @@ import debug from 'debug';
 import { sync as rimraf } from 'rimraf';
 import tpl from './utils/template';
 
-const log = debug('i-cli:update');
+const log = debug('mario-cli:update');
 
 const rm = () => {
   return new Promise((resolve, reject) => {
     try {
-      const templates = path.join(userHome, '.i-cli-templates');
+      const templates = path.join(userHome, '.mario-cli-templates');
       log(`templates:${templates}`);
       rimraf(templates);
       log(`删除模版成功`);

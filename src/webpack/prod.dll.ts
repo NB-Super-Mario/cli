@@ -6,7 +6,7 @@ import debug from 'debug';
 
 import conf from './config';
 
-const log = debug('i-cli:prod-dll');
+const log = debug('mario-cli:prod-dll');
 
 const getDevDllConfig = (opts: any = {}): Config => {
   log(opts);
@@ -40,8 +40,8 @@ const getDevDllConfig = (opts: any = {}): Config => {
     {
       path: join(conf.dllOutput, '[name]-manifest.json'),
       name: '[name]',
-      context: cwd
-    }
+      context: cwd,
+    },
   ]);
   devDllConfig
     .plugin('.providePlugin')

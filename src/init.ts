@@ -18,7 +18,7 @@ import tpl from './utils/template';
 import { Result } from './utils/result';
 import { generate } from './utils/generate-project';
 
-const log = debug('i-cli:init');
+const log = debug('mario-cli:init');
 
 /**
  * @description
@@ -33,13 +33,13 @@ const init = async (): Promise<void> => {
         type: 'list',
         name: 'template',
         message: '请选择工程模版?',
-        choices
+        choices,
       },
       {
         type: 'input',
         name: 'projectName',
-        message: '请输入项目名称'
-      }
+        message: '请输入项目名称',
+      },
     ]);
 
     if (answers) {
@@ -58,7 +58,7 @@ const init = async (): Promise<void> => {
       // 3、拉去模版
       const templatePath = path.join(
         userHome,
-        '.i-cli-templates',
+        '.mario-cli-templates',
         answers.template
       );
       if (!existsSync(templatePath)) {

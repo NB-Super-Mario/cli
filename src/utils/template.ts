@@ -4,7 +4,7 @@ import path from 'path';
 import download from 'download';
 import debug from 'debug';
 
-const log = debug('i-cli:template');
+const log = debug('mario-cli:template');
 
 const yml = path.join(__dirname, '../../template.yml');
 
@@ -39,7 +39,7 @@ const tplChoices = () => {
   keys.forEach(key => {
     const item: any = {
       name: list[key].name,
-      value: key
+      value: key,
     };
     if (list[key].disabledInfo) item.disabled = list[key].disabledInfo;
     result.push(item);
@@ -47,7 +47,7 @@ const tplChoices = () => {
   return result;
 };
 
-const update = async () => {
+const update = async (): Promise<void> => {
   const data = await download(remotePath);
   fs.writeFileSync(yml, data);
 };
@@ -58,5 +58,5 @@ export default {
   getTplList,
   remotePath,
   update,
-  tplChoices
+  tplChoices,
 };

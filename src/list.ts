@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2020-present liying Holding Limited
+ * @author liying <ly.boy2012@gmail.com>
+ * @Description: 模版查看
+ * @Date: 2020-04-14 12:21:40
+ */
+
 import chalk from 'chalk';
 
 import _ from 'lodash';
@@ -5,7 +12,7 @@ import debug from 'debug';
 
 import tpl from './utils/template';
 
-const log = debug('i-cli:list');
+const log = debug('mario-cli:list');
 
 const templateList = (): void => {
   const list = tpl.getTplList();

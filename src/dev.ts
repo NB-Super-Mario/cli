@@ -1,3 +1,10 @@
+/**
+ * Copyright (c) 2020-present liying Holding Limited
+ * @author liying <ly.boy2012@gmail.com>
+ * @Description: 开发调试
+ * @Date: 2020-04-14 12:21:08
+ */
+
 import { resolve } from 'path';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
@@ -9,6 +16,7 @@ import getDevConfig from './webpack/dev';
 
 import getDevDllConfig from './webpack/dev.dll';
 import conf from './webpack/config';
+
 const port = config.get('port');
 const domain = config.get('domain');
 const proxy = config.get('proxy');

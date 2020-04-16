@@ -16,7 +16,7 @@ import { babelOpts } from './util';
 
 import conf from './config';
 
-const log = debug('i-cli:prod');
+const log = debug('mario-cli:prod');
 
 const getProdConfig = (opts: any = {}): Config => {
   log(opts);
@@ -62,7 +62,7 @@ const getProdConfig = (opts: any = {}): Config => {
     .options(babelOpts)
     .end();
 
-  prodConfig.plugin('define').use(webpack.DefinePlugin, conf.definePlugin);
+  prodConfig.plugin('define').use<any>(webpack.DefinePlugin, conf.definePlugin);
 
   prodConfig.plugin('css').use(MiniCssExtractPlugin, [
     {
