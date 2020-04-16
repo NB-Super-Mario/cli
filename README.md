@@ -6,7 +6,7 @@
 #### install 
 
 ```shell
-npm install -g  @mario/cli 
+npm install -g  @nbsupermario/cli 
 ```
 
 #### 脚手架使用
@@ -14,13 +14,13 @@ npm install -g  @mario/cli
 - 创建项目
 	
 	```shell
-	m init
+	nsm init
 	```
 	
 - 选择项目模版
 
 	```shell
-	liyingdeMacBook-Pro:t liying$ m init
+	liyingdeMacBook-Pro:t liying$ nsm init
 	? 请选择工程模版? (Use arrow keys)
 	❯ h5项目react基础模版 
 	  pc项目react基础模版 
@@ -56,5 +56,5 @@ npm install -g  @mario/cli
 #### 项目模版更新(主要是项目模版配置文件记录gitlab 项目模版地址)
 
 ```shell
- m update
+ nsm update
 ```
