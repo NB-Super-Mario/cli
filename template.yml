@@ -1,7 +1,7 @@
 remotePath: 'https://github.com/NB-Super-Mario/template/master/template.yml'
 list:
   template_4_h5:
-    git: 'github.com:NB-Super-Mario/template_4_h5#TEMPLATE_4_H5_tag_V1.0.0'
+    git: 'github.com:NB-Super-Mario/template_4_h5#TEMPLATE_4_H5_tag_V1.0.1'
     name: 'h5项目react基础模版'
     desc: 'react+antd mobile+less+webpack h5基础模版'
     readme: 'https://github.com/NB-Super-Mario/template_4_h5'

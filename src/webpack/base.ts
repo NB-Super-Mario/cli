@@ -48,6 +48,7 @@ const getConfig = (opts: any = {}): Config => {
         template: resolve(opts.src, filename),
         hash: true,
         filename: `${filename}`,
+        // eslint-disable-next-line @typescript-eslint/camelcase
         base_home: `${conf.domain}${conf.prefixTarget}`,
         timestamp: `${new Date().getTime()}`,
         alwaysWriteToDisk: conf.alwaysWriteToDisk,

@@ -1,7 +1,7 @@
 ### 前端项目脚手架
-> 前端基础webpack封装，以实现webpack 打包编译的统一管理
 
 
+> 前端基础webpack封装，以实现react pc/h5 webpack 打包编译的统一管理
 
 #### install 
 
@@ -10,6 +10,8 @@ npm install -g  @nbsupermario/cli
 ```
 
 #### 脚手架使用
+
+![img](docs/assets/mario-cli.png)
 
 - 创建项目
 	
