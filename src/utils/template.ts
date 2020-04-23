@@ -8,7 +8,7 @@ const log = debug('mario-cli:template');
 
 const yml = path.join(__dirname, '../../template.yml');
 
-const getTpl = () => {
+const getTpl = (): any => {
   let tpl;
   try {
     tpl = yaml.safeLoad(fs.readFileSync(yml, 'utf8'));

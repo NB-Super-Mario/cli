@@ -1,7 +1,7 @@
 {
   "name": "@nbsupermario/cli",
-  "version": "1.0.1",
-  "description": "脚手架",
+  "version": "1.0.6",
+  "description": "The react project template cli",
   "main": "./lib/index.js",
   "scripts": {
     "build": "npm run clean && tsc -p ./ --outDir ./lib -d true",
@@ -130,10 +130,10 @@
   },
   "homepage": "https://github.com/NB-Super-Mario/cli#readme",
   "bin": {
-    "sm": "./bin/nsm",
-    "smdev": "./bin/nsm-dev",
-    "smbuild": "./bin/nsm-build",
-    "smserve": "./bin/nsm-serve",
-    "smupdate": "./bin/nsm-update"
+    "nsm": "./bin/nsm",
+    "nsmdev": "./bin/nsm-dev",
+    "nsmbuild": "./bin/nsm-build",
+    "nsmserve": "./bin/nsm-serve",
+    "nsmupdate": "./bin/nsm-update"
   }
 }

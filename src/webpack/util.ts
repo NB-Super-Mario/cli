@@ -14,18 +14,18 @@ export const babelOpts = {
           'transform-modules-umd',
           'transform-modules-systemjs',
           'transform-modules-amd',
-          'transform-literals'
-        ]
-      }
+          'transform-literals',
+        ],
+      },
     ],
-    require.resolve('@babel/preset-react')
+    require.resolve('@babel/preset-react'),
   ],
   plugins: [
     require.resolve('babel-plugin-react-require'),
     require.resolve('@babel/plugin-syntax-dynamic-import'),
     [
       require.resolve('@babel/plugin-proposal-object-rest-spread'),
-      { loose: false, useBuiltIns: false }
+      { loose: false, useBuiltIns: false },
     ],
     require.resolve('@babel/plugin-proposal-optional-catch-binding'),
     require.resolve('@babel/plugin-proposal-async-generator-functions'),
@@ -34,31 +34,31 @@ export const babelOpts = {
     [require.resolve('@babel/plugin-proposal-decorators'), { legacy: true }],
     [
       require.resolve('@babel/plugin-proposal-class-properties'),
-      { loose: true }
+      { loose: true },
     ],
 
     require.resolve('@babel/plugin-proposal-export-namespace-from'),
     require.resolve('@babel/plugin-proposal-export-default-from'),
     [
       require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
-      { loose: false }
+      { loose: false },
     ],
     [
       require.resolve('@babel/plugin-proposal-optional-chaining'),
-      { loose: false }
+      { loose: false },
     ],
     [
       require.resolve('@babel/plugin-proposal-pipeline-operator'),
       {
-        proposal: 'minimal'
-      }
+        proposal: 'minimal',
+      },
     ],
     require.resolve('@babel/plugin-proposal-do-expressions'),
     require.resolve('@babel/plugin-proposal-function-bind'),
     require.resolve('babel-plugin-macros'),
     [
       require.resolve('@babel/plugin-transform-destructuring'),
-      { loose: false }
+      { loose: false },
     ],
     [
       require.resolve('babel-plugin-import'),
@@ -66,19 +66,19 @@ export const babelOpts = {
       {
         style: true,
         libraryDirectory: 'es', // 不加入会出现React.createElement: type is invalid
-        libraryName: 'antd-mobile'
+        libraryName: 'antd-mobile',
       },
-      'antd-mobile'
+      'antd-mobile',
     ],
     [
       require.resolve('babel-plugin-import'),
       {
         style: true,
         libraryDirectory: 'es', // 不加入会出现React.createElement: type is invalid
-        libraryName: 'antd'
+        libraryName: 'antd',
       },
-      'antd'
+      'antd',
     ],
-    require.resolve('react-hot-loader/babel')
-  ]
+    require.resolve('react-hot-loader/babel'),
+  ],
 };

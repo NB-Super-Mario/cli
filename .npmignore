@@ -29,3 +29,7 @@ examples/
 .vscode/
 coverage/
 src/**/*
+
+jest.config.js
+
+__test__/**/*

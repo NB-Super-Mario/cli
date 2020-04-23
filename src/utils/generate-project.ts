@@ -1,3 +1,9 @@
+/**
+ * Copyright (c) 2020-present liying Holding Limited
+ * @author liying <ly.boy2012@gmail.com>
+ * @Description: 通过模版生成项目
+ * @Date: 2020-04-23 13:49:17
+ */
 import debug from 'debug';
 
 import path from 'path';
@@ -25,7 +31,7 @@ const inludeFiletypes = [
   '.sass',
   '.ejs',
   '.jsx',
-  '.yml'
+  '.yml',
 ];
 
 /**
