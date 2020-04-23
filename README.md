@@ -61,4 +61,4 @@ npm install -g  @nbsupermario/cli
 
 #### 注意
 
-- 入需要开启调试开发日志可以在执行 nsm 命令前加入 环境变量 DEBUG= DEBUG=mario-cli:*  
+- 入需要开启调试开发日志可以在执行 nsm 命令前加入 环境变量 DEBUG=mario-cli:*  
