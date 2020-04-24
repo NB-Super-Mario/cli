@@ -29,19 +29,19 @@ const rm = () => {
     }
   });
 };
-const run = async () => {
+const run = async (): Promise<void> => {
   let spinner = ora('删除模版').start();
   const rmResult: any = await rm();
   spinner.stop();
   if (rmResult.state !== 0) return;
   spinner = ora('更新模版').start();
   try {
-    await tpl.update();
+    const template = path.join(userHome, '.mario-cli');
+    await tpl.update(template);
   } catch (error) {
     log(`tpl.update 错误：${error}`);
   } finally {
     spinner.stop();
   }
 };
-
 run();

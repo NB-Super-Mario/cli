@@ -10,9 +10,7 @@ npm install -g  @nbsupermario/cli
 ```
 
 #### 脚手架使用
-
 ![img](docs/assets/mario-cli.png)
-
 - 创建项目
 	
 	```shell
@@ -60,3 +58,7 @@ npm install -g  @nbsupermario/cli
 ```shell
  nsm update
 ```
+
+#### 注意
+
+- 入需要开启调试开发日志可以在执行 nsm 命令前加入 环境变量 DEBUG=mario-cli:*  
