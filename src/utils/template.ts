@@ -1,8 +1,9 @@
 import yaml from 'js-yaml';
-import fs from 'fs';
+import fs, { createReadStream, createWriteStream } from 'fs';
 import path from 'path';
-import download from 'download';
 import debug from 'debug';
+
+import downloadTpl from './down-load-tpl';
 
 const log = debug('mario-cli:template');
 
@@ -47,9 +48,15 @@ const tplChoices = () => {
   return result;
 };
 
-const update = async (): Promise<void> => {
-  const data = await download(remotePath);
-  fs.writeFileSync(yml, data);
+const update = async (template: string): Promise<void> => {
+  log(`remotePath:${remotePath}`);
+  log(`template:${template}`);
+  const result = await downloadTpl(remotePath, template);
+
+  if (result.state !== 0) return;
+  createReadStream(path.join(template, 'template.yml')).pipe(
+    createWriteStream(yml)
+  );
 };
 
 export default {
