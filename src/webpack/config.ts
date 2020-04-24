@@ -18,6 +18,8 @@ const defaultAppConfig = {
       DOMAIN: JSON.stringify(domain),
     },
   ],
+  confWebpack: {},
+  otherHtmlConfig: {},
   alias: {
     '@components': resolve(cwd, 'src/scripts/components'),
     '@actions': resolve(cwd, 'src/scripts/actions'),
@@ -78,6 +80,12 @@ type BaseConf = {
   definePlugin: {
     [key: string]: DefinePlugin.CodeValueObject;
   }[];
+  confWebpack: {
+    [key: string]: any;
+  };
+  otherHtmlConfig: {
+    [key: string]: any;
+  };
   alias: {
     [key: string]: string;
   };

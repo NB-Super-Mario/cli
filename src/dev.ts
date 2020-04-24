@@ -8,6 +8,7 @@
 import { resolve } from 'path';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
+import merge from 'webpack-merge';
 import config from 'config';
 import { address } from 'ip';
 import chalk from 'chalk';
@@ -35,7 +36,7 @@ webpack(getDevDllConfig().toConfig(), (err, stats) => {
 
     process.exit(1);
   }
-  const compiler = webpack(getDevConfig().toConfig());
+  const compiler = webpack(merge(getDevConfig().toConfig(), conf.confWebpack));
   const devServerOptions = {
     // webpack-dev-server options
 
@@ -106,7 +107,7 @@ webpack(getDevDllConfig().toConfig(), (err, stats) => {
     },
   };
   WebpackDevServer.addDevServerEntrypoints(
-    getDevConfig().toConfig(),
+    merge(getDevConfig().toConfig(), conf.confWebpack),
     devServerOptions
   );
   const server = new WebpackDevServer(compiler, devServerOptions);

@@ -53,6 +53,7 @@ const getConfig = (opts: any = {}): Config => {
         timestamp: `${new Date().getTime()}`,
         alwaysWriteToDisk: conf.alwaysWriteToDisk,
         minify: conf.minify,
+        ...conf.otherHtmlConfig,
         /* minify: {
           removeComments: true,
           collapseWhitespace: true,
