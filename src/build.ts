@@ -8,9 +8,10 @@
 import webpack from 'webpack';
 import chalk from 'chalk';
 import debug from 'debug';
-// import conf from './webpack/config';
+import merge from 'webpack-merge';
 import getProdConfig from './webpack/prod';
 import getProdDllConfig from './webpack/prod.dll';
+import conf from './webpack/config';
 
 const log = debug('mario-cli:build');
 
@@ -27,22 +28,24 @@ webpack(getProdDllConfig().toConfig(), (err, stats) => {
     process.exit(1);
   }
 
-  log(`${JSON.stringify(getProdConfig().toConfig())}`);
+  log(`${JSON.stringify(merge(getProdConfig().toConfig(), conf.confWebpack))}`);
 
-  webpack(getProdConfig().toConfig(), (error, status) => {
-    if (error) {
-      console.log(chalk.red(error.message));
-      process.exit(1);
-    }
-    process.stdout.write(
-      `${status.toString({
-        colors: true,
-        modules: false,
-        children: false,
-        chunks: false,
-        chunkModules: false,
-      })}\n\n`
-    );
+  webpack(
+    merge(getProdDllConfig().toConfig(), conf.confWebpack),
+    (error, status) => {
+      if (error) {
+        console.log(chalk.red(error.message));
+        process.exit(1);
+      }
+      process.stdout.write(
+        `${status.toString({
+          colors: true,
+          modules: false,
+          children: false,
+          chunks: false,
+          chunkModules: false,
+        })}\n\n`
+      );
 
     console.log(chalk.green(' 编译完成。\n'));
   });

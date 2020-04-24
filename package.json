@@ -1,6 +1,6 @@
 {
   "name": "@nbsupermario/cli",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "The react project template cli",
   "main": "./lib/index.js",
   "scripts": {
@@ -81,6 +81,7 @@
     "webpack-bundle-analyzer": "^3.5.2",
     "webpack-chain": "^6.0.0",
     "webpack-dev-server": "^3.7.2",
+    "webpack-merge": "^4.2.2",
     "webpack-parallel-uglify-plugin": "^1.1.2"
   },
   "devDependencies": {

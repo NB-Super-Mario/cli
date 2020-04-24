@@ -8,7 +8,7 @@ import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import HtmlWebpackIncludeSiblingChunksPlugin from 'html-webpack-include-sibling-chunks-plugin';
 import CompressionWebpackPlugin from 'compression-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-// import ComboPlugin from 'html-webpack-combo-plugin';
+import ComboPlugin from 'html-webpack-combo-plugin';
 import debug from 'debug';
 import getConfig from './base';
 
@@ -78,7 +78,7 @@ const getProdConfig = (opts: any = {}): Config => {
     .use('mini-css')
     .loader(MiniCssExtractPlugin.loader)
     .options({
-      publicPath: '../', // fonts 引用图片相对路径
+      publicPath: conf.domain,
     })
     .end()
     .use('css-loader')
@@ -103,12 +103,13 @@ const getProdConfig = (opts: any = {}): Config => {
         styles: {
           name: 'commons',
           test: /\.(css|less|sass|scss)$/,
-          chunks: conf.isAntd
+          chunks:
+            /* conf.isAntd
             ? chunk => {
                 // 这里的name 可以参考在使用`webpack-ant-icon-loader`时指定的`chunkName`
                 return chunk.name !== 'antd-icons';
               }
-            : 'all',
+            : */ 'all',
           minChunks: entris.length,
           reuseExistingChunk: true,
           enforce: true,
@@ -117,12 +118,13 @@ const getProdConfig = (opts: any = {}): Config => {
         js: {
           name: 'commons',
           test: /\.(js|tsx?)$/,
-          chunks: conf.isAntd
+          chunks:
+            /* conf.isAntd
             ? chunk => {
                 // 这里的name 可以参考在使用`webpack-ant-icon-loader`时指定的`chunkName`
                 return chunk.name !== 'antd-icons';
               }
-            : 'initial', //  设置 all import() split 无效
+            : */ 'initial', //  设置 all import() split 无效
           minChunks: entris.length,
           minSize: 0,
         },
@@ -146,7 +148,9 @@ const getProdConfig = (opts: any = {}): Config => {
         output: {
           comments: false,
         },
-        compress: {},
+        compress: {
+          drop_console: true,
+        },
       },
     },
   ]);
@@ -169,7 +173,7 @@ const getProdConfig = (opts: any = {}): Config => {
   if (conf.build.bundleAnalyzerReport) {
     prodConfig.plugin('bundleAnalyzerPlugin').use(BundleAnalyzerPlugin);
   }
-  /*  if (conf.build.combo) {
+  if (conf.build.combo) {
     log(`conf.build.combo:${conf.build.combo}`);
     log(`conf.domain:${conf.domain} conf.hostname:${conf.hostname}`);
     prodConfig.plugin('comboPlugin').use(ComboPlugin, [
@@ -178,10 +182,10 @@ const getProdConfig = (opts: any = {}): Config => {
         splitter: ',',
         async: false,
         replaceCssDomain: conf.hostname,
-        replaceScriptDomain: conf.hostname
-      }
+        replaceScriptDomain: conf.hostname,
+      },
     ]);
-  } */
+  }
 
   return prodConfig;
 };
