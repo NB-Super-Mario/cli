@@ -15,3 +15,8 @@ list:
     name: 'pc项目vue基础模版'
     desc: 'vue+element-ui +less+sass+webpack  vue PC基础模版'
     readme: 'https://github.com/NB-Super-Mario/template_4_vue'
+  template_4_remax:
+    git: 'github.com:NB-Super-Mario/template_4_remax#TEMPLATE_4_REMAX_tag_V1.0.0'
+    name: '小程序remax 基础模版'
+    desc: 'remax less redux typescript @vant/weapp 基础模版'
+    readme: 'https://github.com/NB-Super-Mario/template_4_remax'
