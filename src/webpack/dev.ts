@@ -57,6 +57,7 @@ const getDevConfig = (opts: any = {}): Config => {
     .loader('css-loader')
     .options({
       sourceMap: true,
+      modules: conf.useCssModule,
     })
     .end()
     .use('postcss-loader')
@@ -141,6 +142,7 @@ const getDevConfig = (opts: any = {}): Config => {
             // importLoaders: 1
             // minimize: true ,
             sourceMap: true,
+            modules: conf.useCssModule,
           },
         },
         {

@@ -83,6 +83,9 @@ const getProdConfig = (opts: any = {}): Config => {
     .end()
     .use('css-loader')
     .loader('css-loader')
+    .options({
+      modules: conf.useCssModule,
+    })
     .end()
     .use('postcss-loader')
     .loader('postcss-loader')
