@@ -31,7 +31,7 @@ webpack(getProdDllConfig().toConfig(), (err, stats) => {
   log(`${JSON.stringify(merge(getProdConfig().toConfig(), conf.confWebpack))}`);
 
   webpack(
-    merge(getProdDllConfig().toConfig(), conf.confWebpack),
+    merge(getProdConfig().toConfig(), conf.confWebpack),
     (error, status) => {
       if (error) {
         console.log(chalk.red(error.message));
@@ -47,6 +47,7 @@ webpack(getProdDllConfig().toConfig(), (err, stats) => {
         })}\n\n`
       );
 
-    console.log(chalk.green(' 编译完成。\n'));
-  });
+      console.log(chalk.green(' 编译完成。\n'));
+    }
+  );
 });

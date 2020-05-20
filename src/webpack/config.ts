@@ -73,7 +73,6 @@ const defaultAppConfig = {
     chunkhash: true,
   },
   isAntd: false,
-  useCssModule: false,
   isBootstrap: false,
   indexPage: 'home.html',
 };
@@ -129,7 +128,6 @@ type BaseConf = {
     chunkhash: boolean;
   };
   isAntd: boolean;
-  useCssModule: boolean;
   isBootstrap: boolean;
   indexPage: string;
 };

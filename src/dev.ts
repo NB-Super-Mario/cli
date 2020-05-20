@@ -42,7 +42,7 @@ webpack(getDevDllConfig().toConfig(), (err, stats) => {
 
     contentBase: resolve(process.cwd(), '__build/'),
     index: conf.indexPage || 'index.html',
-    open: false,
+    open: conf.dev.isOpenBrowser,
     host: ip,
     port,
 

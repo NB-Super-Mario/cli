@@ -74,7 +74,29 @@ const getProdConfig = (opts: any = {}): Config => {
 
   prodConfig.module
     .rule('css')
-    .test(/\.(css|less)$/)
+    .test(/^((?!\.module).)*(css|less)$/)
+    .use('mini-css')
+    .loader(MiniCssExtractPlugin.loader)
+    .options({
+      publicPath: conf.domain,
+    })
+    .end()
+    .use('css-loader')
+    .loader('css-loader')
+    .end()
+    .use('postcss-loader')
+    .loader('postcss-loader')
+    .end()
+    .use('less-loader')
+    .loader('less-loader')
+    .options({
+      javascriptEnabled: true,
+      modifyVars: theme,
+    });
+
+  prodConfig.module
+    .rule('css-module')
+    .test(/\.module\.(css|less)$/)
     .use('mini-css')
     .loader(MiniCssExtractPlugin.loader)
     .options({
@@ -84,7 +106,7 @@ const getProdConfig = (opts: any = {}): Config => {
     .use('css-loader')
     .loader('css-loader')
     .options({
-      modules: conf.useCssModule,
+      modules: true,
     })
     .end()
     .use('postcss-loader')
@@ -96,6 +118,7 @@ const getProdConfig = (opts: any = {}): Config => {
       javascriptEnabled: true,
       modifyVars: theme,
     });
+
   const entris = prodConfig.entryPoints.values();
 
   prodConfig.optimization
@@ -105,7 +128,7 @@ const getProdConfig = (opts: any = {}): Config => {
       cacheGroups: {
         styles: {
           name: 'commons',
-          test: /\.(css|less|sass|scss)$/,
+          test: /^((?!\.module).)*(css|less|sass|scss)$/,
           chunks:
             /* conf.isAntd
             ? chunk => {
