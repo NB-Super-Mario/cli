@@ -44,7 +44,7 @@ const getDevConfig = (opts: any = {}): Config => {
 
   devConfig.module
     .rule('css')
-    .test(/\.(css)$/)
+    .test(/^((?!\.module).)*css$/)
     .use('style-loader')
     .loader('style-loader')
     .options({
@@ -56,6 +56,29 @@ const getDevConfig = (opts: any = {}): Config => {
     .loader('css-loader')
     .options({
       sourceMap: true,
+    })
+    .end()
+    .use('postcss-loader')
+    .loader('postcss-loader')
+    .options({
+      sourceMap: 'inline',
+    });
+
+  devConfig.module
+    .rule('module-css')
+    .test(/\.module\.css$/)
+    .use('style-loader')
+    .loader('style-loader')
+    .options({
+      // sourceMap: true
+      // singleton: true
+    })
+    .end()
+    .use('css-loader')
+    .loader('css-loader')
+    .options({
+      sourceMap: true,
+      modules: true,
     })
     .end()
     .use('postcss-loader')
@@ -93,8 +116,14 @@ const getDevConfig = (opts: any = {}): Config => {
   } */
 
   devConfig.module
+    .rule('less-module')
+    .test(/\.module\.less$/)
+    .use('happypack')
+    .loader('happypack/loader?id=styles-module');
+
+  devConfig.module
     .rule('less')
-    .test(/\.less$/)
+    .test(/^((?!\.module).)*less$/)
     .use('happypack')
     .loader('happypack/loader?id=styles');
 
@@ -121,6 +150,40 @@ const getDevConfig = (opts: any = {}): Config => {
       ],
     },
   ]);
+  devConfig.plugin('happypack-styles-module').use(HappyPack, [
+    {
+      id: 'styles-module',
+      threadPool: happyThreadPool,
+      // 3) re-add the loaders you replaced above in #1:
+      loaders: [
+        {
+          loader: 'style-loader',
+          options: {
+            // sourceMap: true
+            //  singleton: true
+          },
+        },
+        {
+          loader: 'css-loader',
+          options: {
+            // importLoaders: 1
+            // minimize: true ,
+            modules: true,
+            sourceMap: true,
+          },
+        },
+        {
+          loader: 'less-loader',
+          options: {
+            sourceMap: true,
+            javascriptEnabled: true,
+            modifyVars: theme,
+          },
+        },
+      ],
+    },
+  ]);
+
   devConfig.plugin('happypack-styles').use(HappyPack, [
     {
       id: 'styles',
