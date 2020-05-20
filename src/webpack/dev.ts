@@ -2,7 +2,6 @@ import { resolve, relative, join } from 'path';
 import Config from 'webpack-chain';
 import webpack from 'webpack';
 
-import OpenBrowserPlugin from 'open-browser-webpack-plugin';
 import HtmlWebpackHarddiskPlugin from 'html-webpack-harddisk-plugin';
 // import HappyPack from 'happypack';
 
@@ -163,12 +162,6 @@ const getDevConfig = (opts: any = {}): Config => {
     },
   ]);
 
-  if (conf.dev.isOpenBrowser)
-    devConfig
-      .plugin('openBrowserPlugin')
-      .use(OpenBrowserPlugin, [
-        { url: `http:${conf.domain}${conf.indexPage}` },
-      ]);
   devConfig.devtool('cheap-module-eval-source-map');
   return devConfig;
 };
