@@ -3,6 +3,14 @@
 
 > 前端基础项目模版脚手架，涵盖 react/vue 技术栈 ，目前 针对pc h5 小程序 三端，后续会持续新增项目模版如nodejs flutter 等
 
+[![NPM version][npm-image]][npm-url]
+[![npm download][download-image]][download-url]
+
+[npm-image]: https://img.shields.io/npm/v/@nbsupermario/cli.svg?style=flat-square
+[npm-url]: https://www.npmjs.com/package/@nbsupermario/cli
+[download-image]: https://img.shields.io/npm/dm/@nbsupermario/cli.svg?style=flat-square
+[download-url]: https://www.npmjs.com/package/@nbsupermario/cli
+
 #### install 
 
 ```shell
