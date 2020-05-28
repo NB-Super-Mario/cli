@@ -12,7 +12,7 @@ import { babelOpts } from './util';
 
 const HappyPack = require('happypack');
 
-const getDevConfig = (opts: any = {}): Config => {
+const getDevConfig = (): Config => {
   const cwd = conf.cwd || process.cwd();
 
   const src = conf.src || resolve(cwd, 'src');
@@ -22,7 +22,7 @@ const getDevConfig = (opts: any = {}): Config => {
   const happyThreadPool = HappyPack.ThreadPool({ size: 5 });
   const devConfig: Config = getConfig({
     config: {
-      domain: opts.domain,
+      domain: conf.domain,
     },
     cwd,
     src,
@@ -34,7 +34,7 @@ const getDevConfig = (opts: any = {}): Config => {
   devConfig.output
     .filename(`scripts/[name].js`)
     .chunkFilename(`scripts/[name].js`)
-    .publicPath(opts.domain || undefined)
+    .publicPath(conf.domain || '/')
     .devtoolModuleFilenameTemplate(info => {
       return relative(cwd, info.absoluteResourcePath).replace(/\\/g, '/');
     })
