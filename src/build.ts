@@ -24,6 +24,7 @@ webpack(getProdDllConfig().toConfig(), (err, stats) => {
   if (err || stats.hasErrors()) {
     // 在这里处理错误
 
+    console.log(chalk.red(JSON.stringify(stats)));
     console.log(chalk.red(err.message));
     process.exit(1);
   }
@@ -37,6 +38,10 @@ webpack(getProdDllConfig().toConfig(), (err, stats) => {
         console.log(chalk.red(error.message));
         process.exit(1);
       }
+      if (status) {
+        console.log(chalk.red(JSON.stringify(stats)));
+      }
+
       process.stdout.write(
         `${status.toString({
           colors: true,

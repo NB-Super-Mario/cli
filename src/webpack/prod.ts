@@ -174,9 +174,11 @@ const getProdConfig = (opts: any = {}): Config => {
         output: {
           comments: false,
         },
-        compress: {
-          drop_console: true,
-        },
+        warnings: false,
+                compress: {
+                    drop_debugger: true,
+                    drop_console: true,
+                },
       },
     },
   ]);
