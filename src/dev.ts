@@ -23,8 +23,8 @@ const domain = config.get('domain');
 const proxy = config.get('proxy');
 const ip = address();
 
-webpack(getDevDllConfig().toConfig(), (err, stats) => {
-  if (err || stats.hasErrors()) {
+webpack(getDevDllConfig(), (err, stats) => {
+  if (err || stats?.hasErrors()) {
     // 在这里处理错误
     if (err) {
       if (!err.message) {
@@ -36,7 +36,7 @@ webpack(getDevDllConfig().toConfig(), (err, stats) => {
 
     process.exit(1);
   }
-  const compiler = webpack(merge(getDevConfig().toConfig(), conf.confWebpack));
+  const compiler = webpack(merge(getDevConfig(), conf.confWebpack));
   const devServerOptions = {
     // webpack-dev-server options
 
@@ -109,7 +109,7 @@ webpack(getDevDllConfig().toConfig(), (err, stats) => {
     },
   };
   WebpackDevServer.addDevServerEntrypoints(
-    merge(getDevConfig().toConfig(), conf.confWebpack),
+    merge(getDevConfig(), conf.confWebpack),
     devServerOptions
   );
   const server = new WebpackDevServer(compiler, devServerOptions);

@@ -2,8 +2,6 @@ import { resolve } from 'path';
 import { existsSync } from 'fs';
 import config from 'config';
 
-import { DefinePlugin } from 'webpack';
-
 const domain = config.get('domain');
 const hostname = config.get('hostname');
 const isOpenBrowser = config.get('isOpenBrowser');
@@ -78,7 +76,7 @@ const defaultAppConfig = {
 };
 type BaseConf = {
   definePlugin: {
-    [key: string]: DefinePlugin.CodeValueObject;
+    [key: string]: any;
   }[];
   confWebpack: {
     [key: string]: any;

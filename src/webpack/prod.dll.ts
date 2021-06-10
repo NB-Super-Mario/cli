@@ -1,6 +1,6 @@
 import { join } from 'path';
-import Config from 'webpack-chain';
-import webpack from 'webpack';
+
+import { Configuration, DefinePlugin, DllPlugin, ProvidePlugin } from 'webpack';
 
 import debug from 'debug';
 
@@ -8,46 +8,38 @@ import conf from './config';
 
 const log = debug('mario-cli:prod-dll');
 
-const getDevDllConfig = (opts: any = {}): Config => {
+const getDevDllConfig = (opts: any = {}): Configuration => {
   log(opts);
-  const devDllConfig = new Config();
   const cwd = conf.cwd;
 
-  devDllConfig.mode('production');
+  return {
+    mode: 'production',
+    entry: conf.dllEntry,
 
-  Object.keys(conf.dllEntry).forEach(name => {
-    log(`dllEntry:name ${name}`);
-    devDllConfig.entry(`${name}`);
+    output: {
+      filename: '[name].js',
+      path: join(conf.dllOutput),
 
-    conf.dllEntry[`${name}`].forEach(item => {
-      log(
-        `devDllConfig:${name}:
-          ${devDllConfig.entryPoints.get(name)}`
-      );
-      log(`devDllConfig:item:${item}`);
-      devDllConfig.entryPoints.get(`${name}`).add(item);
-    });
-    devDllConfig.end();
-  });
-
-  devDllConfig.output
-    .filename(`[name].js`)
-    .path(conf.dllOutput)
-    .libraryTarget('umd')
-    .library('[name]');
-  devDllConfig.externals(conf.externals);
-  devDllConfig.plugin('dll').use(webpack.DllPlugin, [
-    {
-      path: join(conf.dllOutput, '[name]-manifest.json'),
-      name: '[name]',
-      context: cwd,
+      // The name of the global variable which the library's
+      // require() function will be assigned to
+      libraryTarget: 'umd',
+      library: '[name]',
     },
-  ]);
-  devDllConfig
-    .plugin('.providePlugin')
-    .use(webpack.ProvidePlugin, [conf.provideDefs]);
-
-  return devDllConfig;
+    externals: conf.externals,
+    plugins: [
+      new DefinePlugin({
+        'process.env': {
+          NODE_ENV: '"production"',
+        },
+      }),
+      new DllPlugin({
+        path: join(conf.dllOutput, '[name]-manifest.json'),
+        name: '[name]',
+        context: cwd,
+      }),
+      new ProvidePlugin(conf.provideDefs),
+    ],
+  };
 };
 
 export default getDevDllConfig;

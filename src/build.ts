@@ -20,39 +20,36 @@ const log = debug('mario-cli:build');
 } else {
 }
  */
-webpack(getProdDllConfig().toConfig(), (err, stats) => {
-  if (err || stats.hasErrors()) {
+webpack(getProdDllConfig(), (err, stats) => {
+  if (err || stats?.hasErrors()) {
     // 在这里处理错误
 
     console.log(chalk.red(JSON.stringify(stats)));
-    console.log(chalk.red(err.message));
+    console.log(chalk.red(`${err?.message}`));
     process.exit(1);
   }
 
-  log(`${JSON.stringify(merge(getProdConfig().toConfig(), conf.confWebpack))}`);
+  log(`${JSON.stringify(merge(getProdConfig(), conf.confWebpack))}`);
 
-  webpack(
-    merge(getProdConfig().toConfig(), conf.confWebpack),
-    (error, status) => {
-      if (error) {
-        console.log(chalk.red(error.message));
-        process.exit(1);
-      }
-      if (status) {
-        console.log(chalk.red(JSON.stringify(stats)));
-      }
-
-      process.stdout.write(
-        `${status.toString({
-          colors: true,
-          modules: false,
-          children: false,
-          chunks: false,
-          chunkModules: false,
-        })}\n\n`
-      );
-
-      console.log(chalk.green(' 编译完成。\n'));
+  webpack(merge(getProdConfig(), conf.confWebpack), (error, status) => {
+    if (error) {
+      console.log(chalk.red(error.message));
+      process.exit(1);
     }
-  );
+    if (status) {
+      console.log(chalk.red(JSON.stringify(stats)));
+    }
+
+    process.stdout.write(
+      `${status?.toString({
+        colors: true,
+        modules: false,
+        children: false,
+        chunks: false,
+        chunkModules: false,
+      })}\n\n`
+    );
+
+    console.log(chalk.green(' 编译完成。\n'));
+  });
 });

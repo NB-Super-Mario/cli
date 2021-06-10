@@ -34,6 +34,26 @@
     },
     {
       "type": "node",
+      "request": "launch",
+      "name": "code debug cli",
+      "args": ["${workspaceFolder}/src/debug.ts"],
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "ts-node/register",
+        "-r",
+        "tsconfig-paths/register"
+      ],
+      "sourceMaps": true,
+      "cwd": "${workspaceRoot}",
+      "protocol": "inspector",
+      "env": {
+        "TS_NODE_PROJECT": "tsconfig.json",
+        "TS_NODE_TRANSPILE_ONLY": "true"
+      }
+    },
+    {
+      "type": "node",
       "name": "vscode-jest-tests",
       "request": "launch",
       "args": ["--runInBand"],

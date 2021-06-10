@@ -1,3 +1,12 @@
+import fs from 'fs';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import { resolve, join } from 'path';
+import {
+  DllReferencePlugin,
+  EntryObject,
+  WebpackPluginInstance,
+} from 'webpack';
+
 export const babelOpts = {
   presets: [
     [
@@ -81,4 +90,99 @@ export const babelOpts = {
     ],
     require.resolve('react-hot-loader/babel'),
   ],
+};
+
+/**
+ * 获得webpack入口
+ * @param cwd
+ * @param entry
+ * @returns
+ */
+export const getEntries = (
+  cwd: string,
+  entry = 'src/scripts/entry'
+): EntryObject => {
+  const entryDir = resolve(cwd, entry);
+  const names = fs.readdirSync(entryDir);
+  const map = {};
+
+  names.forEach(name => {
+    const m = /(.+)\.(js|tsx?)?$/.exec(name);
+    const fileName = m ? m[1] : '';
+    if (fileName) {
+      const entryPath = fileName ? resolve(entryDir, name) : '';
+
+      if (fileName) map[fileName] = entryPath;
+    }
+  });
+  return map;
+};
+
+/**
+ * html 插件
+ * @param config
+ * @param defaultConf
+ * @param src
+ * @returns
+ */
+export const getHtmlPlugin = (
+  entry,
+  defaultConf,
+  src
+): WebpackPluginInstance[] => {
+  const plugins: WebpackPluginInstance[] = [];
+  const pages = fs.readdirSync(src);
+  pages.forEach(filename => {
+    const m = /(.+)\.html$/.exec(filename);
+
+    if (m) {
+      // @see https://github.com/kangax/html-minifier
+      const conf = {
+        template: resolve(src, filename),
+        // @see https://github.com/kangax/html-minifier
+        // minify: {
+        //     collapseWhitespace: true,
+        //     removeComments: true
+        // },
+        hash: true,
+        filename: `${filename}`,
+        // eslint-disable-next-line @typescript-eslint/camelcase
+        base_home: `${defaultConf.domain}${defaultConf.prefixTarget}`,
+        timestamp: `${new Date().getTime()}`,
+        alwaysWriteToDisk: defaultConf.alwaysWriteToDisk,
+        minify: defaultConf.minify,
+        ...defaultConf.otherHtmlConfig,
+      };
+
+      if (m[1] in entry) {
+        conf.inject = 'body';
+        conf.chunks = [m[1]];
+      }
+      plugins.push(new HtmlWebpackPlugin(conf)); // 打包时候连同html一起打包
+    }
+  });
+
+  return plugins;
+};
+
+/**
+ * dll插件
+ * @param cwd
+ * @param defaultConf
+ * @returns
+ */
+export const getDllRerencePlugin = (
+  cwd,
+  defaultConf
+): WebpackPluginInstance[] => {
+  const plugins: WebpackPluginInstance[] = [];
+  Object.keys(defaultConf.dllEntry).forEach(name => {
+    plugins.push(
+      new DllReferencePlugin({
+        context: cwd,
+        manifest: require(join(defaultConf.dllOutput, `${name}-manifest.json`)),
+      })
+    );
+  });
+  return plugins;
 };
