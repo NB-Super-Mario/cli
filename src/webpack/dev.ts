@@ -14,6 +14,7 @@ import { EOL } from 'os';
 import conf from './config';
 
 import getConfig from './base';
+import { getBabelOpts } from './util';
 
 const ReactRefreshTypeScript = require('react-refresh-typescript');
 
@@ -57,6 +58,20 @@ const getDevConfig = (): Configuration => {
     },
     module: {
       rules: [
+        {
+          test: /\.jsx?$/,
+          exclude: [
+            join(cwd, 'node_modules'),
+            join(__dirname, '../../node_modules'),
+          ],
+          use: [
+            {
+              loader: 'babel-loader',
+              options: getBabelOpts(true),
+            },
+          ],
+        },
+
         {
           test: /\.css$/,
           use: [
@@ -113,28 +128,16 @@ const getDevConfig = (): Configuration => {
             },
           ],
         },
-        {
-          test: /\.js$/,
-          include: [src],
-          use: [
-            {
-              loader: 'babel-loader',
-              options: {
-                babelrc: false,
-                plugins: ['react-refresh/babel'],
-                // importLoaders: 1
-                // minimize: true ,
-                sourceMap: true,
-                cacheDirectory: false,
-              },
-            },
-          ],
-        },
+
         {
           test: /\.tsx?$/,
           exclude: [join(cwd, 'node_modules'), join(cwd, 'src', 'dll')],
           include: [join(cwd, 'src')],
           use: [
+            {
+              loader: 'babel-loader',
+              options: getBabelOpts(true),
+            },
             {
               loader: 'ts-loader',
               options: {

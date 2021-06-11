@@ -10,12 +10,7 @@ import debug from 'debug';
 
 import conf from './config';
 
-import {
-  babelOpts,
-  getDllRerencePlugin,
-  getEntries,
-  getHtmlPlugin,
-} from './util';
+import { getDllRerencePlugin, getEntries, getHtmlPlugin } from './util';
 
 const log = debug('mario-cli:base');
 
@@ -26,6 +21,7 @@ const getBaseConfig = (opts: any = {}): Configuration => {
 
   // Instantiate the configuration with a new API
   const config: Configuration = {
+    cache: true,
     context: cwd,
     entry,
     resolve: {
@@ -58,20 +54,6 @@ const getBaseConfig = (opts: any = {}): Configuration => {
     externals: { ...conf.externals },
     module: {
       rules: [
-        {
-          test: /\.jsx?$/,
-          exclude: [
-            join(cwd, 'node_modules'),
-            join(__dirname, '../../node_modules'),
-          ],
-          use: [
-            {
-              loader: 'babel-loader',
-              options: babelOpts,
-            },
-          ],
-        },
-
         {
           test: /\.(jpe?g|png|gif|svg)$/i,
           use: [

@@ -14,7 +14,7 @@ import { EOL } from 'os';
 
 import getConfig from './base';
 
-import { babelOpts } from './util';
+import { getBabelOpts } from './util';
 
 import conf from './config';
 
@@ -28,7 +28,7 @@ const getProdConfig = (opts: any = {}): Configuration => {
   const pkg = require(resolve(cwd, 'package.json'));
   const src = conf.src || resolve(cwd, 'src');
 
-  const theme = require(resolve(cwd, 'theme'));
+  // const theme = require(resolve(cwd, 'theme'));
   const tsConfigFile = join(cwd, 'tsconfig.json');
   log(`locConfig:${JSON.stringify(tsConfigFile)}`);
 
@@ -64,69 +64,20 @@ const getProdConfig = (opts: any = {}): Configuration => {
           use: [
             {
               loader: 'babel-loader',
-              options: babelOpts,
+              options: getBabelOpts(false),
             },
           ],
         },
-        {
-          test: /^((?!\.module).)*(css|less)$/,
 
-          use: [
-            {
-              loader: MiniCssExtractPlugin.loader,
-              options: {
-                publicPath: conf.domain,
-              },
-            },
-            {
-              loader: 'css-loader',
-            },
-            {
-              loader: 'postcss-loader',
-            },
-            {
-              loader: 'less-loader',
-              options: {
-                lessOptions: {
-                  javascriptEnabled: true,
-                  modifyVars: theme,
-                },
-              },
-            },
-          ],
-        },
-        {
-          test: /\.module\.(css|less)$/,
-
-          use: [
-            {
-              loader: MiniCssExtractPlugin.loader,
-              options: {
-                publicPath: conf.domain,
-              },
-            },
-            {
-              loader: 'css-loader',
-            },
-            {
-              loader: 'postcss-loader',
-            },
-            {
-              loader: 'less-loader',
-              options: {
-                lessOptions: {
-                  javascriptEnabled: true,
-                  modifyVars: theme,
-                },
-              },
-            },
-          ],
-        },
         {
           test: /\.tsx?$/,
           exclude: [join(cwd, 'node_modules'), join(cwd, 'src', 'dll')],
           include: [join(cwd, 'src')],
           use: [
+            {
+              loader: 'babel-loader',
+              options: getBabelOpts(false),
+            },
             {
               loader: 'ts-loader',
               options: {
