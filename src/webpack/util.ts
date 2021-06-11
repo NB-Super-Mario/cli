@@ -72,7 +72,7 @@ export const babelOpts = {
       },
       'antd',
     ],
-    require.resolve('react-hot-loader/babel'),
+    // require.resolve('react-hot-loader/babel'),
   ],
 };
 

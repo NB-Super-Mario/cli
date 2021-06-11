@@ -3,11 +3,10 @@ import {
   ContextReplacementPlugin,
   ProvidePlugin,
 } from 'webpack';
-import { join, relative, resolve } from 'path';
+import { join, resolve } from 'path';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
-import tsImportPluginFactory from 'ts-import-plugin';
+
 import debug from 'debug';
-import { EOL } from 'os';
 
 import conf from './config';
 
@@ -23,8 +22,8 @@ const log = debug('mario-cli:base');
 const getBaseConfig = (opts: any = {}): Configuration => {
   const cwd = opts.cwd || process.cwd();
   const entry = getEntries(cwd, opts.entry);
-  const tsConfigFile = opts.tsConfigFile || join(cwd, 'tsconfig.json');
-  log(`locConfig:${JSON.stringify(tsConfigFile)}`);
+  log(opts);
+
   // Instantiate the configuration with a new API
   const config: Configuration = {
     context: cwd,
@@ -72,58 +71,7 @@ const getBaseConfig = (opts: any = {}): Configuration => {
             },
           ],
         },
-        {
-          test: /\.tsx?$/,
-          exclude: [join(cwd, 'node_modules'), join(cwd, 'src', 'dll')],
-          include: [join(cwd, 'src')],
-          use: [
-            {
-              loader: 'ts-loader',
-              options: {
-                configFile: tsConfigFile,
-                transpileOnly: true,
-                getCustomTransformers: () => ({
-                  before: [
-                    tsImportPluginFactory([
-                      {
-                        libraryName: 'antd-mobile',
-                        libraryDirectory: 'es', // lib antd 嵌套会报错
-                        style: true,
-                      },
-                      {
-                        libraryName: 'antd',
-                        libraryDirectory: 'es', // lib antd 嵌套会报错
-                        style: true,
-                      },
-                    ]),
-                  ],
-                }),
-                // ref: https://github.com/TypeStrong/ts-loader/blob/fbed24b/src/utils.ts#L23
-                errorFormatter(error, colors) {
-                  const messageColor =
-                    error.severity === 'warning'
-                      ? colors.bold.yellow
-                      : colors.bold.red;
-                  return (
-                    colors.grey('[tsl] ') +
-                    messageColor(error.severity.toUpperCase()) +
-                    (error.file === ''
-                      ? ''
-                      : messageColor(' in ') +
-                        colors.bold.cyan(
-                          `${relative(cwd, join(error.context, error.file))}(${
-                            error.line
-                          },${error.character})`
-                        )) +
-                    EOL +
-                    messageColor(`      TS${error.code}: ${error.content}`)
-                  );
-                },
-                ...(opts.typescript || {}),
-              },
-            },
-          ],
-        },
+
         {
           test: /\.(jpe?g|png|gif|svg)$/i,
           use: [
