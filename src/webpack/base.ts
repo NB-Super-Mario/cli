@@ -37,12 +37,14 @@ const getBaseConfig = (opts: any = {}): Configuration => {
         join(__dirname, '../../../'),
         join(__dirname, '../../node_modules'),
       ],
+      // enforceExtension: true,
+      // preferRelative: true,
       extensions: [
-        '.web.js',
-        '.js',
-        '.json',
         '.tsx',
         '.ts',
+        '.js',
+        '.web.js',
+        '.json',
         '.ejs',
         '.jsx',
         '.css',
@@ -59,6 +61,10 @@ const getBaseConfig = (opts: any = {}): Configuration => {
       rules: [
         {
           test: /\.jsx?$/,
+          exclude: [
+            join(cwd, 'node_modules'),
+            join(__dirname, '../../node_modules'),
+          ],
           use: [
             {
               loader: 'babel-loader',
@@ -68,6 +74,8 @@ const getBaseConfig = (opts: any = {}): Configuration => {
         },
         {
           test: /\.tsx?$/,
+          exclude: [join(cwd, 'node_modules'), join(cwd, 'src', 'dll')],
+          include: [join(cwd, 'src')],
           use: [
             {
               loader: 'ts-loader',
@@ -146,28 +154,30 @@ const getBaseConfig = (opts: any = {}): Configuration => {
     plugins: [
       ...getDllRerencePlugin(cwd, conf),
       ...getHtmlPlugin(entry, conf, opts.src),
-      new CopyWebpackPlugin([
-        [
+      new CopyWebpackPlugin({
+        patterns: [
           {
             from: opts.dllOutput,
             to: `${conf.prefixTarget}lib`,
-            ignore: ['*.json'],
-            debug: 'info',
+            globOptions: {
+              ignore: ['*.json'],
+            },
+
             context: cwd,
           },
           {
             from: join(opts.src, 'scripts', 'lib', 'min'),
-            to: `${conf.prefixTarget}lib`,
-            ignore: ['*.json'],
-            debug: 'info',
+            to: `${conf.prefixTarget}lib/[name][ext]`,
+            globOptions: {
+              ignore: ['*.json'],
+            },
             context: cwd,
-            flatten: true,
           },
           { from: 'src/static-res/favicon.ico', to: 'favicon.ico' },
           { from: 'src/static-res/healthCheck.html', to: 'healthCheck.html' },
           ...conf.copyRes,
         ],
-      ]),
+      }),
       new ContextReplacementPlugin([/moment[\\/]locale$/, /^\.\/(zh-cn|en)$/]),
       new ProvidePlugin(conf.provideDefs),
     ],

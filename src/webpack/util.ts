@@ -8,13 +8,16 @@ import {
 } from 'webpack';
 
 export const babelOpts = {
+  sourceType: 'unambiguous',
   presets: [
     [
       require.resolve('@babel/preset-env'),
       {
         targets: { browsers: ['last 2 versions'] },
-        loose: false,
-        modules: 'commonjs',
+        modules: 'auto',
+        //  debug: true,
+        useBuiltIns: 'usage',
+        corejs: 2,
         exclude: [
           'transform-typeof-symbol',
           'transform-unicode-regex',
@@ -32,30 +35,15 @@ export const babelOpts = {
   plugins: [
     require.resolve('babel-plugin-react-require'),
     require.resolve('@babel/plugin-syntax-dynamic-import'),
-    [
-      require.resolve('@babel/plugin-proposal-object-rest-spread'),
-      { loose: false, useBuiltIns: false },
-    ],
-    require.resolve('@babel/plugin-proposal-optional-catch-binding'),
+
     require.resolve('@babel/plugin-proposal-async-generator-functions'),
 
     // 下面两个的顺序的配置都不能动
     [require.resolve('@babel/plugin-proposal-decorators'), { legacy: true }],
-    [
-      require.resolve('@babel/plugin-proposal-class-properties'),
-      { loose: true },
-    ],
+    [require.resolve('@babel/plugin-proposal-class-properties')],
 
-    require.resolve('@babel/plugin-proposal-export-namespace-from'),
     require.resolve('@babel/plugin-proposal-export-default-from'),
-    [
-      require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
-      { loose: false },
-    ],
-    [
-      require.resolve('@babel/plugin-proposal-optional-chaining'),
-      { loose: false },
-    ],
+
     [
       require.resolve('@babel/plugin-proposal-pipeline-operator'),
       {
@@ -65,10 +53,6 @@ export const babelOpts = {
     require.resolve('@babel/plugin-proposal-do-expressions'),
     require.resolve('@babel/plugin-proposal-function-bind'),
     require.resolve('babel-plugin-macros'),
-    [
-      require.resolve('@babel/plugin-transform-destructuring'),
-      { loose: false },
-    ],
     [
       require.resolve('babel-plugin-import'),
 

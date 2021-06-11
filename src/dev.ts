@@ -8,10 +8,11 @@
 import { resolve } from 'path';
 import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
-import merge from 'webpack-merge';
+import { merge } from 'webpack-merge';
 import config from 'config';
 import { address } from 'ip';
 import chalk from 'chalk';
+import debug from 'debug';
 
 import getDevConfig from './webpack/dev';
 
@@ -22,6 +23,8 @@ const port = config.get('port');
 const domain = config.get('domain');
 const proxy = config.get('proxy');
 const ip = address();
+const log = debug('mario-cli:dev');
+log(`dll webapck:${JSON.stringify(getDevDllConfig())}`);
 
 webpack(getDevDllConfig(), (err, stats) => {
   if (err || stats?.hasErrors()) {
@@ -36,6 +39,8 @@ webpack(getDevDllConfig(), (err, stats) => {
 
     process.exit(1);
   }
+  log(`getDevConfig webapck:${JSON.stringify(getDevConfig())}`);
+
   const compiler = webpack(merge(getDevConfig(), conf.confWebpack));
   const devServerOptions = {
     // webpack-dev-server options
@@ -69,7 +74,7 @@ webpack(getDevDllConfig(), (err, stats) => {
     // and has many other use cases (see https://github.com/webpack/webpack-dev-server/pull/127 ).
     proxy,
 
-    setup() {
+    before() {
       // Here you can access the Express app object and add your own custom middleware to it.
       // For example, to define custom handlers for some paths:
       // app.get('/some/path', function(req, res) {

@@ -2,7 +2,7 @@ import { resolve, join } from 'path';
 
 import { Configuration, DefinePlugin } from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-
+import { merge } from 'webpack-merge';
 import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 import HtmlWebpackIncludeSiblingChunksPlugin from 'html-webpack-include-sibling-chunks-plugin';
 import CompressionWebpackPlugin from 'compression-webpack-plugin';
@@ -35,8 +35,7 @@ const getProdConfig = (opts: any = {}): Configuration => {
   });
   const entris = Object.keys(prodConfig.entry ?? {});
 
-  return {
-    ...prodConfig,
+  return merge(prodConfig, {
     mode: 'production',
     output: {
       path: resolve(cwd, 'target', `${pkg.name}`),
@@ -82,8 +81,10 @@ const getProdConfig = (opts: any = {}): Configuration => {
             {
               loader: 'less-loader',
               options: {
-                javascriptEnabled: true,
-                modifyVars: theme,
+                lessOptions: {
+                  javascriptEnabled: true,
+                  modifyVars: theme,
+                },
               },
             },
           ],
@@ -107,8 +108,10 @@ const getProdConfig = (opts: any = {}): Configuration => {
             {
               loader: 'less-loader',
               options: {
-                javascriptEnabled: true,
-                modifyVars: theme,
+                lessOptions: {
+                  javascriptEnabled: true,
+                  modifyVars: theme,
+                },
               },
             },
           ],
@@ -184,6 +187,6 @@ const getProdConfig = (opts: any = {}): Configuration => {
       noEmitOnErrors: true,
       concatenateModules: true,
     },
-  };
+  });
 };
 export default getProdConfig;
