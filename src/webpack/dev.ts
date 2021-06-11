@@ -192,7 +192,7 @@ const getDevConfig = (): Configuration => {
       new HotModuleReplacementPlugin(),
       new ReactRefreshWebpackPlugin(),
     ].filter(Boolean),
-    // devtool: 'eval-source-map',
+    devtool: 'inline-cheap-module-source-map',
   });
 };
 
