@@ -130,14 +130,11 @@ const getProdConfig = (opts: any = {}): Configuration => {
           use: [
             {
               loader: MiniCssExtractPlugin.loader,
-            },
-            {
-              loader: 'css-loader',
               options: {
-                // sourceMap: true
-                // singleton: true
+                esModule: false,
               },
             },
+
             {
               loader: 'css-loader',
               options: {},
@@ -162,9 +159,11 @@ const getProdConfig = (opts: any = {}): Configuration => {
                 // singleton: true
               },
             },
-
             {
               loader: MiniCssExtractPlugin.loader,
+              options: {
+                esModule: false,
+              },
             },
             {
               loader: 'css-loader',
