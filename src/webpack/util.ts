@@ -1,18 +1,24 @@
 import fs from 'fs';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { resolve, join } from 'path';
+
 import {
+  DefinePlugin,
   DllReferencePlugin,
   EntryObject,
   WebpackPluginInstance,
 } from 'webpack';
+// import CompressionWebpackPlugin from 'compression-webpack-plugin';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import ComboPlugin from 'html-webpack-combo-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 export const getBabelOpts = (
   isDev: boolean
 ): {
   [index: string]: any;
 } => {
-  return {
+  const babelOpts = {
     sourceType: 'unambiguous',
     presets: [
       [
@@ -77,13 +83,14 @@ export const getBabelOpts = (
         },
         'antd',
       ],
-      isDev ? require.resolve('react-refresh/babel') : [],
 
       // require.resolve('react-hot-loader/babel'),
     ],
     sourceMap: isDev,
     cacheDirectory: isDev,
   };
+  if (isDev) babelOpts.plugins.push(require.resolve('react-refresh/babel'));
+  return babelOpts;
 };
 
 /**
@@ -178,5 +185,55 @@ export const getDllRerencePlugin = (
       })
     );
   });
+  return plugins;
+};
+
+export const getProdPlugin = (conf): WebpackPluginInstance[] => {
+  const plugins: WebpackPluginInstance[] = [];
+  plugins.push(
+    new DefinePlugin(
+      conf.definePlugin[0]
+      // Object.fromEntries(conf.definePlugin.map(e => [e.key, e.value]))
+    )
+  );
+  plugins.push(
+    new MiniCssExtractPlugin({
+      filename: `${conf.prefixTarget}css/[name].css`,
+      chunkFilename: `${conf.prefixTarget}css/[name]${
+        conf.build.chunkhash ? '.[chunkhash]' : ''
+      }.css`,
+      ignoreOrder: true,
+    })
+  );
+  if (conf.build.productionGzip) {
+    /* plugins.push(
+      new CompressionWebpackPlugin({
+        filename: '[path].gz[query]',
+        algorithm: 'gzip',
+        test: /\.(js|css|html|svg)$/,
+        threshold: 10240,
+        minRatio: 0.8,
+        deleteOriginalAssets: false,
+      })
+    ); */
+  }
+  // new HtmlWebpackIncludeSiblingChunksPlugin(),
+  // new OptimizeCssAssetsPlugin(),
+
+  if (conf.build.bundleAnalyzerReport) {
+    plugins.push(new BundleAnalyzerPlugin());
+  }
+  if (conf.build.combo) {
+    plugins.push(
+      ComboPlugin({
+        baseUri: `${conf.domain}??`,
+        splitter: ',',
+        async: false,
+        replaceCssDomain: conf.hostname,
+        replaceScriptDomain: conf.hostname,
+      })
+    );
+  }
+
   return plugins;
 };

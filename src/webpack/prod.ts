@@ -1,20 +1,19 @@
 import { resolve, join, relative } from 'path';
 
-import { Configuration, DefinePlugin } from 'webpack';
+import { Configuration } from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { merge } from 'webpack-merge';
-import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
-import HtmlWebpackIncludeSiblingChunksPlugin from 'html-webpack-include-sibling-chunks-plugin';
-import CompressionWebpackPlugin from 'compression-webpack-plugin';
-import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
-import ComboPlugin from 'html-webpack-combo-plugin';
+// import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
+// import HtmlWebpackIncludeSiblingChunksPlugin from 'html-webpack-include-sibling-chunks-plugin';
+
 import tsImportPluginFactory from 'ts-import-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
 import debug from 'debug';
 import { EOL } from 'os';
 
 import getConfig from './base';
 
-import { getBabelOpts } from './util';
+import { getBabelOpts, getProdPlugin } from './util';
 
 import conf from './config';
 
@@ -24,7 +23,8 @@ const getProdConfig = (opts: any = {}): Configuration => {
   log(opts);
 
   const cwd = conf.cwd || process.cwd();
-
+  const theme = require(resolve(cwd, 'theme'));
+  log(`theme:${JSON.stringify(theme)}`);
   const pkg = require(resolve(cwd, 'package.json'));
   const src = conf.src || resolve(cwd, 'src');
 
@@ -39,7 +39,7 @@ const getProdConfig = (opts: any = {}): Configuration => {
     entry: 'src/scripts/entry',
     dllOutput: resolve(src, 'dll'),
   });
-  const entris = Object.keys(prodConfig.entry ?? {});
+  // const entris = Object.keys(prodConfig.entry ?? {});
 
   return merge(prodConfig, {
     mode: 'production',
@@ -125,76 +125,140 @@ const getProdConfig = (opts: any = {}): Configuration => {
             },
           ],
         },
+        {
+          test: /\.css$/,
+          use: [
+            {
+              loader: MiniCssExtractPlugin.loader,
+            },
+            {
+              loader: 'css-loader',
+              options: {
+                // sourceMap: true
+                // singleton: true
+              },
+            },
+            {
+              loader: 'css-loader',
+              options: {},
+            },
+            /* {
+              loader: 'postcss-loader',
+              options: {
+                postcssOptions: {
+                  sourceMap: 'inline',
+                },
+              },
+            }, */
+          ],
+        },
+        {
+          test: /\.less$/,
+          use: [
+            {
+              loader: 'style-loader',
+              options: {
+                // sourceMap: true
+                // singleton: true
+              },
+            },
+
+            {
+              loader: MiniCssExtractPlugin.loader,
+            },
+            {
+              loader: 'css-loader',
+              options: {
+                // sourceMap: true
+                // singleton: true
+              },
+            },
+
+            {
+              loader: 'less-loader',
+              options: {
+                lessOptions: {
+                  javascriptEnabled: true,
+                  modifyVars: theme,
+                  strictMath: false,
+                  noIeCompat: true,
+                },
+                // sourceMap: true,
+              },
+            },
+          ],
+        },
       ],
     },
-    plugins: [
-      new DefinePlugin(
-        conf.definePlugin[0]
-        // Object.fromEntries(conf.definePlugin.map(e => [e.key, e.value]))
-      ),
-      new MiniCssExtractPlugin({
-        filename: `${conf.prefixTarget}css/[name].css`,
-        allChunks: true,
-        ignoreOrder: true,
-      }),
-      new HtmlWebpackIncludeSiblingChunksPlugin(),
-      new OptimizeCssAssetsPlugin(),
-      conf.build.productionGzip
-        ? new CompressionWebpackPlugin({
-            filename: '[path].gz[query]',
-            algorithm: 'gzip',
-            test: /\.(js|css|html|svg)$/,
-            threshold: 10240,
-            minRatio: 0.8,
-            deleteOriginalAssets: false,
-          })
-        : {},
-      conf.build.bundleAnalyzerReport ? new BundleAnalyzerPlugin() : {},
-      conf.build.combo
-        ? ComboPlugin({
-            baseUri: `${conf.domain}??`,
-            splitter: ',',
-            async: false,
-            replaceCssDomain: conf.hostname,
-            replaceScriptDomain: conf.hostname,
-          })
-        : {},
-    ],
+    plugins: [...getProdPlugin(conf)],
     optimization: {
-      runtimeChunk: true,
-      splitChunks: {
-        cacheGroups: {
-          styles: {
-            name: 'commons',
-            test: /^((?!\.module).)*(css|less|sass|scss)$/,
-            chunks:
-              /* conf.isAntd
-              ? chunk => {
-                  // 这里的name 可以参考在使用`webpack-ant-icon-loader`时指定的`chunkName`
-                  return chunk.name !== 'antd-icons';
-                }
-              : */ 'all',
-            minChunks: entris.length,
-            reuseExistingChunk: true,
-            enforce: true,
-            minSize: 0,
+      minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            parse: {
+              // We want terser to parse ecma 8 code. However, we don't want it
+              // to apply any minification steps that turns valid ecma 5 code
+              // into invalid ecma 5 code. This is why the 'compress' and 'output'
+              // sections only apply transformations that are ecma 5 safe
+              // https://github.com/facebook/create-react-app/pull/4234
+              ecma: 8,
+            },
+            compress: {
+              ecma: 5,
+              warnings: false,
+              // Disabled because of an issue with Uglify breaking seemingly valid code:
+              // https://github.com/facebook/create-react-app/issues/2376
+              // Pending further investigation:
+              // https://github.com/mishoo/UglifyJS2/issues/2011
+              comparisons: false,
+              // Disabled because of an issue with Terser breaking valid code:
+              // https://github.com/facebook/create-react-app/issues/5250
+              // Pending further investigation:
+              // https://github.com/terser-js/terser/issues/120
+              inline: 2,
+            },
+            mangle: {
+              safari10: true,
+            },
+            // Added for profiling in devtools
+            keep_classnames: conf.build.bundleAnalyzerReport,
+            keep_fnames: conf.build.bundleAnalyzerReport,
+            output: {
+              ecma: 5,
+              comments: false,
+              // Turned on because emoji and regex is not minified properly using default
+              // https://github.com/facebook/create-react-app/issues/2488
+              ascii_only: true,
+            },
           },
-          js: {
-            name: 'commons',
-            test: /\.(js|tsx?)$/,
-            chunks:
-              /* conf.isAntd
-              ? chunk => {
-                  // 这里的name 可以参考在使用`webpack-ant-icon-loader`时指定的`chunkName`
-                  return chunk.name !== 'antd-icons';
-                }
-              : */ 'initial', //  设置 all import() split 无效
-            minChunks: entris.length,
-            minSize: 0,
+        }),
+      ],
+      runtimeChunk: {
+        name: entrypoint => `runtime~${entrypoint.name}`,
+      },
+      splitChunks: {
+        chunks: 'async',
+        minSize: 20000,
+        minRemainingSize: 0,
+        minChunks: 1,
+        maxAsyncRequests: 30,
+        maxInitialRequests: 30,
+        enforceSizeThreshold: 50000,
+        cacheGroups: {
+          defaultVendors: {
+            test: /[\\/]node_modules[\\/]/,
+            priority: -10,
+            reuseExistingChunk: true,
+          },
+          default: {
+            minChunks: 2,
+            priority: -20,
+            reuseExistingChunk: true,
           },
         },
       },
-      noEmitOnErrors: true,
+      emitOnErrors: true,
       concatenateModules: true,
     },
   });

@@ -29,7 +29,7 @@ webpack(getProdDllConfig(), (err, stats) => {
     process.exit(1);
   }
 
-  log(`${JSON.stringify(merge(getProdConfig(), conf.confWebpack))}`);
+  log(`prod:${JSON.stringify(merge(getProdConfig(), conf.confWebpack))}`);
 
   webpack(merge(getProdConfig(), conf.confWebpack), (error, status) => {
     if (error) {
@@ -37,7 +37,7 @@ webpack(getProdDllConfig(), (err, stats) => {
       process.exit(1);
     }
     if (status) {
-      console.log(chalk.red(JSON.stringify(stats)));
+      console.log(status);
     }
 
     process.stdout.write(
