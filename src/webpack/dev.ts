@@ -11,12 +11,12 @@ import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import debug from 'debug';
 import tsImportPluginFactory from 'ts-import-plugin';
 import { EOL } from 'os';
+import ReactRefreshTypeScript from 'react-refresh-typescript';
+
 import conf from './config';
 
 import getConfig from './base';
 import { getBabelOpts } from './util';
-
-const ReactRefreshTypeScript = require('react-refresh-typescript');
 
 // import HappyPack = require('happypack');
 const log = debug('mario-cli:dev');

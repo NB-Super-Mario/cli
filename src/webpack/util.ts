@@ -1,6 +1,7 @@
 import fs from 'fs';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { resolve, join } from 'path';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 
 import {
   DefinePlugin,
@@ -190,12 +191,15 @@ export const getDllRerencePlugin = (
 
 export const getProdPlugin = (conf): WebpackPluginInstance[] => {
   const plugins: WebpackPluginInstance[] = [];
+
   plugins.push(
     new DefinePlugin(
       conf.definePlugin[0]
       // Object.fromEntries(conf.definePlugin.map(e => [e.key, e.value]))
     )
   );
+  plugins.push(new CleanWebpackPlugin());
+
   plugins.push(
     new MiniCssExtractPlugin({
       filename: `${conf.prefixTarget}css/[name].css`,

@@ -3,6 +3,7 @@ import { resolve, join, relative } from 'path';
 import { Configuration } from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { merge } from 'webpack-merge';
+
 // import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 // import HtmlWebpackIncludeSiblingChunksPlugin from 'html-webpack-include-sibling-chunks-plugin';
 
@@ -52,8 +53,8 @@ const getProdConfig = (opts: any = {}): Configuration => {
         conf.build.chunkhash ? '.[chunkhash]' : ''
       }.js`,
       publicPath: conf.domain,
-      chunkLoading: false,
-      wasmLoading: false,
+      //  chunkLoading: false,
+      // wasmLoading: false,
     },
     module: {
       rules: [
@@ -120,7 +121,6 @@ const getProdConfig = (opts: any = {}): Configuration => {
                     messageColor(`      TS${error.code}: ${error.content}`)
                   );
                 },
-                ...(opts.typescript || {}),
               },
             },
           ],
