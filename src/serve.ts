@@ -34,7 +34,7 @@ app.use(
 
 app.use(
   serveStatic(`target/${conf.pkg.name}`, {
-    index: [conf.indexPage || 'home.html'],
+    index: [conf.indexPage || 'index.html'],
   })
 );
 

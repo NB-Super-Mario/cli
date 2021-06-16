@@ -59,7 +59,7 @@ const getProdConfig = (opts: any = {}): Configuration => {
       rules: [
         {
           test: /\.js$/,
-          exclude: [join(cwd, 'node_modules')],
+          exclude: [join(cwd, 'node_modules'), join(cwd, 'src', 'dll')],
           include: [src],
           use: [
             {

@@ -72,7 +72,7 @@ const defaultAppConfig = {
   },
   isAntd: false,
   isBootstrap: false,
-  indexPage: 'home.html',
+  indexPage: 'index.html',
 };
 type BaseConf = {
   definePlugin: {
