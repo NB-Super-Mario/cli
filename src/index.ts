@@ -4,6 +4,7 @@
  * @Description: 初始化
  * @Date: 2020-04-14 12:20:18
  */
+
 import program from 'commander';
 import { resolve } from 'path';
 import { dynamicImport } from './utils/dynamic-import';

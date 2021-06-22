@@ -9,7 +9,7 @@ import {
   EntryObject,
   WebpackPluginInstance,
 } from 'webpack';
-// import CompressionWebpackPlugin from 'compression-webpack-plugin';
+import CompressionWebpackPlugin from 'compression-webpack-plugin';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 import ComboPlugin from 'html-webpack-combo-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -210,16 +210,16 @@ export const getProdPlugin = (conf): WebpackPluginInstance[] => {
     })
   );
   if (conf.build.productionGzip) {
-    /* plugins.push(
+    plugins.push(
       new CompressionWebpackPlugin({
-        filename: '[path].gz[query]',
+        filename: '[path][base].gz[query]',
         algorithm: 'gzip',
         test: /\.(js|css|html|svg)$/,
         threshold: 10240,
         minRatio: 0.8,
         deleteOriginalAssets: false,
       })
-    ); */
+    );
   }
   // new HtmlWebpackIncludeSiblingChunksPlugin(),
   // new OptimizeCssAssetsPlugin(),

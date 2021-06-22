@@ -1,6 +1,7 @@
 import { resolve } from 'path';
 import { existsSync } from 'fs';
 import config from 'config';
+import { Configuration } from 'webpack';
 
 const domain = config.get('domain');
 const hostname = config.get('hostname');
@@ -73,14 +74,13 @@ const defaultAppConfig = {
   isAntd: false,
   isBootstrap: false,
   indexPage: 'index.html',
+  configureWebpack: {},
 };
 type BaseConf = {
   definePlugin: {
     [key: string]: any;
   }[];
-  confWebpack: {
-    [key: string]: any;
-  };
+  confWebpack: Configuration;
   otherHtmlConfig: {
     [key: string]: any;
   };

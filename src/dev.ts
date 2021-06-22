@@ -44,16 +44,18 @@ webpack(getDevDllConfig(), (err, stats) => {
   const compiler = webpack(merge(getDevConfig(), conf.confWebpack));
   const devServerOptions = {
     // webpack-dev-server options
-
-    contentBase: resolve(process.cwd(), '__build/'),
-    index: conf.indexPage || 'index.html',
+    // inline: true,
+    static: resolve(process.cwd(), '__build/'),
+    // contentBase: resolve(process.cwd(), '__build/'),
+    // serveIndex: conf.indexPage || 'index.html',
     open: conf.dev.isOpenBrowser,
     host: ip,
     port,
+    hot: true,
 
     // Can also be an array, or: contentBase: "http://localhost/",
-    hot: true,
-    hotOnly: true,
+    // hot: true,
+    // hotOnly: true,
     // Enable special support for Hot Module Replacement
     // Page is no longer updated, but a "webpackHotUpdate" message is send to the content
     // Use "webpack/hot/dev-server" as additional module in your entry point
@@ -64,7 +66,7 @@ webpack(getDevDllConfig(), (err, stats) => {
     historyApiFallback: {
       disableDotRule: true,
     },
-    disableHostCheck: true,
+    // disableHostCheck: true,
     // Set this if you want to enable gzip compression for assets
     compress: true,
 
@@ -74,26 +76,26 @@ webpack(getDevDllConfig(), (err, stats) => {
     // and has many other use cases (see https://github.com/webpack/webpack-dev-server/pull/127 ).
     proxy,
 
-    before() {
-      // Here you can access the Express app object and add your own custom middleware to it.
-      // For example, to define custom handlers for some paths:
-      // app.get('/some/path', function(req, res) {
-      //   res.json({ custom: 'response' });
-      // });
-    },
+    // before() {
+    // Here you can access the Express app object and add your own custom middleware to it.
+    // For example, to define custom handlers for some paths:
+    // app.get('/some/path', function(req, res) {
+    //   res.json({ custom: 'response' });
+    // });
+    // },
     // pass [static options](http://expressjs.com/en/4x/api.html#express.static) to inner express server
-    staticOptions: {},
-    logLevel: 'debug',
+    // staticOptions: {},
+    // logLevel: 'debug',
     // webpack-dev-middleware options
-    quiet: false,
-    noInfo: false,
-    lazy: false,
-    overlay: true,
-    watchOptions: {
+    // quiet: false,
+    // noInfo: false,
+    // lazy: false,
+    // overlay: true,
+    /* watchOptions: {
       aggregateTimeout: 300,
       ignored: /node_modules/,
       poll: true,
-    },
+    }, */
     // It's a required option.
     headers: {
       'Access-Control-Allow-Origin': '*',
@@ -101,7 +103,7 @@ webpack(getDevDllConfig(), (err, stats) => {
       'Access-Control-Allow-Headers':
         'X-Requested-With, content-type, Authorization',
     },
-    stats: {
+    /* stats: {
       color: true,
       all: false,
       modules: true,
@@ -111,12 +113,12 @@ webpack(getDevDllConfig(), (err, stats) => {
       // our additional options
       moduleTrace: true,
       errorDetails: true,
-    },
+    }, */
   };
-  WebpackDevServer.addDevServerEntrypoints(
+  /* WebpackDevServer.addDevServerEntrypoints(
     merge(getDevConfig(), conf.confWebpack),
     devServerOptions
-  );
+  ); */
   const server = new WebpackDevServer(compiler, devServerOptions);
   server.listen(port, '0.0.0.0', () => {
     console.log(chalk.green(`Starting server on http:${domain}`));

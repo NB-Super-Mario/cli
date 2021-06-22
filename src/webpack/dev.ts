@@ -12,12 +12,13 @@ import debug from 'debug';
 import tsImportPluginFactory from 'ts-import-plugin';
 import { EOL } from 'os';
 import ReactRefreshTypeScript from 'react-refresh-typescript';
-
+// import { address } from 'ip';
 import conf from './config';
 
 import getConfig from './base';
 import { getBabelOpts } from './util';
 
+// const ip = address();
 // import HappyPack = require('happypack');
 const log = debug('mario-cli:dev');
 
@@ -41,7 +42,7 @@ const getDevConfig = (): Configuration => {
   });
   return merge(devConfig, {
     mode: 'development',
-
+    target: 'web',
     output: {
       filename: `scripts/[name].js`,
       chunkFilename: `scripts/[name].js`,
@@ -193,7 +194,12 @@ const getDevConfig = (): Configuration => {
         outputPath: '__build',
       }),
       new HotModuleReplacementPlugin(),
-      new ReactRefreshWebpackPlugin(),
+      new ReactRefreshWebpackPlugin(/* {
+        overlay: {
+          sockIntegration: 'ws',
+          sockHost: `ws://10.101.192.159:9009`,
+        },
+      } */),
     ].filter(Boolean),
     devtool: 'inline-cheap-module-source-map',
   });

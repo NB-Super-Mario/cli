@@ -53,7 +53,7 @@ const getProdConfig = (opts: any = {}): Configuration => {
         conf.build.chunkhash ? '.[chunkhash]' : ''
       }.js`,
       publicPath: conf.domain,
-      //  chunkLoading: false,
+      // chunkLoading: false,
       // wasmLoading: false,
     },
     module: {
