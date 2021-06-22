@@ -41,7 +41,14 @@ webpack(getDevDllConfig(), (err, stats) => {
   }
   log(`getDevConfig webapck:${JSON.stringify(getDevConfig())}`);
 
-  const compiler = webpack(merge(getDevConfig(), conf.confWebpack));
+  const devConf: any = getDevConfig();
+  const entryList: any[] = Object.keys(devConf.entry);
+  entryList.forEach(key => {
+    devConf.entry[key].unshift(`webpack/hot/only-dev-server`);
+    devConf.entry[key].unshift(`webpack-dev-server/client?http:${domain}`);
+  });
+
+  const compiler = webpack(merge(devConf, conf.confWebpack));
   const devServerOptions = {
     // webpack-dev-server options
     // inline: true,
@@ -52,6 +59,7 @@ webpack(getDevDllConfig(), (err, stats) => {
     host: ip,
     port,
     hot: true,
+    liveReload: false,
 
     // Can also be an array, or: contentBase: "http://localhost/",
     // hot: true,

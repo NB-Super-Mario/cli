@@ -146,6 +146,7 @@ const getDevConfig = (): Configuration => {
                 transpileOnly: true,
                 getCustomTransformers: () => ({
                   before: [
+                    ReactRefreshTypeScript(),
                     tsImportPluginFactory([
                       {
                         libraryName: 'antd-mobile',
@@ -158,7 +159,6 @@ const getDevConfig = (): Configuration => {
                         style: true,
                       },
                     ]),
-                    ReactRefreshTypeScript(),
                   ],
                 }),
                 // ref: https://github.com/TypeStrong/ts-loader/blob/fbed24b/src/utils.ts#L23
@@ -196,8 +196,8 @@ const getDevConfig = (): Configuration => {
       new HotModuleReplacementPlugin(),
       new ReactRefreshWebpackPlugin(/* {
         overlay: {
-          sockIntegration: 'ws',
-          sockHost: `ws://10.101.192.159:9009`,
+          sockIntegration: 'whm',
+          // sockHost: `ws://10.101.192.159:9009`,
         },
       } */),
     ].filter(Boolean),

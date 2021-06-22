@@ -114,7 +114,7 @@ export const getEntries = (
     if (fileName) {
       const entryPath = fileName ? resolve(entryDir, name) : '';
 
-      if (fileName) map[fileName] = entryPath;
+      if (fileName) map[fileName] = [entryPath];
     }
   });
   return map;
