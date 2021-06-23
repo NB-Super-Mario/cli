@@ -42,7 +42,12 @@ export const getBabelOpts = (
           ],
         },
       ],
-      require.resolve('@babel/preset-react'),
+      [
+        require.resolve('@babel/preset-react'),
+        {
+          runtime: 'automatic',
+        },
+      ],
     ],
     plugins: [
       require.resolve('babel-plugin-react-require'),
