@@ -2,6 +2,8 @@ import { resolve, join, relative } from 'path';
 
 import { Configuration } from 'webpack';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+
 import { merge } from 'webpack-merge';
 
 // import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
@@ -230,6 +232,11 @@ const getProdConfig = (opts: any = {}): Configuration => {
               // https://github.com/facebook/create-react-app/issues/2488
               ascii_only: true,
             },
+          },
+        }),
+        new CssMinimizerPlugin({
+          warningsFilter: () => {
+            return false;
           },
         }),
       ],

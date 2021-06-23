@@ -19,7 +19,6 @@ import getConfig from './base';
 import { getBabelOpts } from './util';
 
 // const ip = address();
-// import HappyPack = require('happypack');
 const log = debug('mario-cli:dev');
 
 const getDevConfig = (): Configuration => {
@@ -30,7 +29,7 @@ const getDevConfig = (): Configuration => {
   log(`locConfig:${JSON.stringify(tsConfigFile)}`);
   const theme = require(resolve(cwd, 'theme'));
   log(`theme:${JSON.stringify(theme)}`);
-  // const happyThreadPool = HappyPack.ThreadPool({ size: 5 });
+
   const devConfig: Configuration = getConfig({
     config: {
       domain: conf.domain,

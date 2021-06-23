@@ -234,7 +234,7 @@ export const getProdPlugin = (conf): WebpackPluginInstance[] => {
   }
   if (conf.build.combo) {
     plugins.push(
-      ComboPlugin({
+      new ComboPlugin({
         baseUri: `${conf.domain}??`,
         splitter: ',',
         async: false,
