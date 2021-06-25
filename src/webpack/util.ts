@@ -34,7 +34,7 @@ export const babelOpts = {
     [require.resolve('@babel/plugin-proposal-decorators'), { legacy: true }],
     [
       require.resolve('@babel/plugin-proposal-class-properties'),
-      { loose: true },
+      { loose: false },
     ],
 
     require.resolve('@babel/plugin-proposal-export-namespace-from'),
