@@ -26,8 +26,8 @@ const ip = address();
 const log = debug('mario-cli:dev');
 log(`dll webapck:${JSON.stringify(getDevDllConfig())}`);
 
-webpack(getDevDllConfig(), (err, stats) => {
-  if (err || stats?.hasErrors()) {
+webpack(getDevDllConfig(), (err, stats: any) => {
+  if (err || stats.hasErrors()) {
     // 在这里处理错误
     if (err) {
       if (!err.message) {

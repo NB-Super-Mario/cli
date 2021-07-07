@@ -15,26 +15,28 @@ import conf from './webpack/config';
 
 const log = debug('mario-cli:build');
 
-webpack(getProdDllConfig(), (err, stats) => {
-  if (err || stats?.hasErrors()) {
+webpack(getProdDllConfig(), (err: any, stats: any) => {
+  if (err || stats.hasErrors()) {
     // 在这里处理错误
 
     console.log(chalk.red(JSON.stringify(stats)));
-    console.log(chalk.red(`${err?.message}`));
+
+    console.log(chalk.red(`${err.message}`));
+
     process.exit(1);
   }
   console.log(chalk.green(' dll 编译完成。\n'));
 
   log(`prod:${JSON.stringify(merge(getProdConfig(), conf.confWebpack))}`);
 
-  webpack(merge(getProdConfig(), conf.confWebpack), (error, status) => {
+  webpack(merge(getProdConfig(), conf.confWebpack), (error, status: any) => {
     if (error) {
       console.log(chalk.red(error.message));
       process.exit(1);
     }
 
     process.stdout.write(
-      `${status?.toString({
+      `${status.toString({
         colors: true,
         modules: false,
         children: false,
