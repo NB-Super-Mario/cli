@@ -10,7 +10,7 @@ import webpack from 'webpack';
 import WebpackDevServer from 'webpack-dev-server';
 import { merge } from 'webpack-merge';
 import config from 'config';
-import { address } from 'ip';
+// import { address } from 'ip';
 import chalk from 'chalk';
 import debug from 'debug';
 
@@ -22,7 +22,7 @@ import conf from './webpack/config';
 const port = config.get('port');
 const domain = config.get('domain');
 const proxy = config.get('proxy');
-const ip = address();
+// const ip = address();
 const log = debug('mario-cli:dev');
 log(`dll webapck:${JSON.stringify(getDevDllConfig())}`);
 
@@ -56,7 +56,7 @@ webpack(getDevDllConfig(), (err, stats: any) => {
     // contentBase: resolve(process.cwd(), '__build/'),
     // serveIndex: conf.indexPage || 'index.html',
     open: conf.dev.isOpenBrowser,
-    host: ip,
+    host: '0.0.0.0',
     port,
     hot: true,
     liveReload: false,
@@ -74,7 +74,8 @@ webpack(getDevDllConfig(), (err, stats: any) => {
     historyApiFallback: {
       disableDotRule: true,
     },
-    // disableHostCheck: true,
+    // firewall: false,
+    allowedHosts: 'all',
     // Set this if you want to enable gzip compression for assets
     compress: true,
 

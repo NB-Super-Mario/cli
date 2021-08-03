@@ -1,6 +1,6 @@
 {
   "name": "@nbsupermario/cli",
-  "version": "2.0.1",
+  "version": "2.0.3",
   "description": "The react project template cli",
   "main": "./lib/index.js",
   "scripts": {
@@ -40,7 +40,7 @@
     "copy-webpack-plugin": "^9.0.0",
     "core-js": "2",
     "css-loader": "^5.2.6",
-    "css-minimizer-webpack-plugin": "^3.0.1",
+    "css-minimizer-webpack-plugin": "^3.0.2",
     "debug": "^4.1.1",
     "download": "^7.1.0",
     "download-git-repo": "^2.0.0",
@@ -78,7 +78,7 @@
     "user-home": "^2.0.0",
     "webpack": "^5.40.0",
     "webpack-bundle-analyzer": "^4.4.2",
-    "webpack-dev-server": "^4.0.0-beta.3",
+    "webpack-dev-server": "^4.0.0-rc.0",
     "webpack-merge": "^5.8.0"
   },
   "devDependencies": {
