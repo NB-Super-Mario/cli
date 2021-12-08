@@ -44,7 +44,7 @@ const getProdConfig = (opts: any = {}): Config => {
       }.js`
     )
     .chunkFilename(
-      `${conf.prefixTarget}scripts/[name]${
+      `${conf.prefixTarget}scripts/[chunkhash]${
         conf.build.chunkhash ? '.[chunkhash]' : ''
       }.js`
     )
