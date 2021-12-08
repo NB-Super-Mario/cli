@@ -44,9 +44,9 @@ const getProdConfig = (opts: any = {}): Config => {
       }.js`
     )
     .chunkFilename(
-      `${conf.prefixTarget}scripts/[chunkhash]${
+      `${conf.prefixTarget}scripts/[name]${
         conf.build.chunkhash ? '.[chunkhash]' : ''
-      }.js`
+      }.js?_t=[chunkhash]`
     )
     .publicPath(conf.domain);
 
@@ -67,6 +67,7 @@ const getProdConfig = (opts: any = {}): Config => {
   prodConfig.plugin('css').use(MiniCssExtractPlugin, [
     {
       filename: `${conf.prefixTarget}css/[name].css`,
+      chunkFilename: `${conf.prefixTarget}css/[name].css?_t=[chunkhash]`,
       allChunks: true,
       ignoreOrder: true,
     },

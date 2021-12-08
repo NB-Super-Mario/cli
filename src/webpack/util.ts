@@ -82,3 +82,5 @@ export const babelOpts = {
     require.resolve('react-hot-loader/babel'),
   ],
 };
+
+export default babelOpts;

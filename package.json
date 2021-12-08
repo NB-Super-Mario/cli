@@ -1,6 +1,6 @@
 {
   "name": "@nbsupermario/cli",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "The react project template cli",
   "main": "./lib/index.js",
   "scripts": {
