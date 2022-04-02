@@ -1,8 +1,4 @@
-import {
-  Configuration,
-  ContextReplacementPlugin,
-  ProvidePlugin,
-} from 'webpack';
+import { Configuration, ProvidePlugin, IgnorePlugin } from 'webpack';
 import { join, resolve } from 'path';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 
@@ -108,7 +104,11 @@ const getBaseConfig = (opts: any = {}): Configuration => {
           ...conf.copyRes,
         ],
       }),
-      new ContextReplacementPlugin([/moment[\\/]locale$/, /^\.\/(zh-cn|en)$/]),
+      new IgnorePlugin({
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/,
+      }),
+
       new ProvidePlugin(conf.provideDefs),
     ],
   };
