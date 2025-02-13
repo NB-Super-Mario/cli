@@ -58,7 +58,7 @@ webpack(getDevDllConfig(), (err, stats: any) => {
     open: conf.dev.isOpenBrowser,
     host: '0.0.0.0',
     port,
-    hot: true,
+    hot: false,
     liveReload: false,
 
     // Can also be an array, or: contentBase: "http://localhost/",

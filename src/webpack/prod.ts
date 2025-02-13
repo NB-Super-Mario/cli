@@ -1,18 +1,18 @@
-import { resolve, join, relative } from 'path';
+import { join, relative, resolve } from 'path';
 
-import { Configuration } from 'webpack';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { Configuration } from 'webpack';
 
 import { merge } from 'webpack-merge';
 
 // import OptimizeCssAssetsPlugin from 'optimize-css-assets-webpack-plugin';
 // import HtmlWebpackIncludeSiblingChunksPlugin from 'html-webpack-include-sibling-chunks-plugin';
 
-import tsImportPluginFactory from 'ts-import-plugin';
-import TerserPlugin from 'terser-webpack-plugin';
 import debug from 'debug';
 import { EOL } from 'os';
+import TerserPlugin from 'terser-webpack-plugin';
+import tsImportPluginFactory from 'ts-import-plugin';
 
 import getConfig from './base';
 
@@ -48,12 +48,10 @@ const getProdConfig = (opts: any = {}): Configuration => {
     mode: 'production',
     output: {
       path: resolve(cwd, 'target', `${pkg.name}`),
-      filename: `${conf.prefixTarget}scripts/[name]${
-        conf.build.chunkhash ? '.[chunkhash]' : ''
-      }.js`,
-      chunkFilename: `${conf.prefixTarget}scripts/[name]${
-        conf.build.chunkhash ? '.[chunkhash]' : ''
-      }.js`,
+      filename: `${conf.prefixTarget}scripts/[name]${conf.build.chunkhash ? '.[chunkhash]' : ''
+        }.js`,
+      chunkFilename: `${conf.prefixTarget}scripts/[name]${conf.build.chunkhash ? '.[chunkhash]' : ''
+        }.js`,
       publicPath: conf.domain,
       // chunkLoading: false,
       // wasmLoading: false,
@@ -114,11 +112,10 @@ const getProdConfig = (opts: any = {}): Configuration => {
                     (error.file === ''
                       ? ''
                       : messageColor(' in ') +
-                        colors.bold.cyan(
-                          `${relative(cwd, join(error.context, error.file))}(${
-                            error.line
-                          },${error.character})`
-                        )) +
+                      colors.bold.cyan(
+                        `${relative(cwd, join(error.context, error.file))}(${error.line
+                        },${error.character})`
+                      )) +
                     EOL +
                     messageColor(`      TS${error.code}: ${error.content}`)
                   );
@@ -183,6 +180,7 @@ const getProdConfig = (opts: any = {}): Configuration => {
                   modifyVars: theme,
                   strictMath: false,
                   noIeCompat: true,
+                  math: 'always', // Properly configure LESS options
                 },
                 // sourceMap: true,
               },

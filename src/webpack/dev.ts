@@ -1,17 +1,17 @@
-import { resolve, relative, join } from 'path';
+import { join, relative, resolve } from 'path';
 
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import debug from 'debug';
+import HtmlWebpackHarddiskPlugin from 'html-webpack-harddisk-plugin';
+import { EOL } from 'os';
+import ReactRefreshTypeScript from 'react-refresh-typescript';
+import tsImportPluginFactory from 'ts-import-plugin';
 import {
   Configuration,
   DefinePlugin,
   HotModuleReplacementPlugin,
 } from 'webpack';
 import { merge } from 'webpack-merge';
-import HtmlWebpackHarddiskPlugin from 'html-webpack-harddisk-plugin';
-import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
-import debug from 'debug';
-import tsImportPluginFactory from 'ts-import-plugin';
-import { EOL } from 'os';
-import ReactRefreshTypeScript from 'react-refresh-typescript';
 // import { address } from 'ip';
 import conf from './config';
 
@@ -122,6 +122,7 @@ const getDevConfig = (): Configuration => {
                   modifyVars: theme,
                   strictMath: false,
                   noIeCompat: true,
+                  math: 'always', // Properly configure LESS options
                 },
                 sourceMap: true,
               },
@@ -172,11 +173,10 @@ const getDevConfig = (): Configuration => {
                     (error.file === ''
                       ? ''
                       : messageColor(' in ') +
-                        colors.bold.cyan(
-                          `${relative(cwd, join(error.context, error.file))}(${
-                            error.line
-                          },${error.character})`
-                        )) +
+                      colors.bold.cyan(
+                        `${relative(cwd, join(error.context, error.file))}(${error.line
+                        },${error.character})`
+                      )) +
                     EOL +
                     messageColor(`      TS${error.code}: ${error.content}`)
                   );

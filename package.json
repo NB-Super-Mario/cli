@@ -1,6 +1,6 @@
 {
   "name": "@nbsupermario/cli",
-  "version": "2.1.1",
+  "version": "2.1.4",
   "description": "The react project template cli",
   "main": "./lib/index.js",
   "scripts": {
@@ -53,8 +53,8 @@
     "inquirer": "^7.0.0",
     "ip": "^1.1.5",
     "js-yaml": "^3.13.1",
-    "less": "^3.13.1",
-    "less-loader": "^9.0.0",
+    "less": "^4.2.2",
+    "less-loader": "^9.1.0",
     "lodash": "^4.17.15",
     "mini-css-extract-plugin": "^1.6.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
@@ -103,14 +103,6 @@
     "ts-jest": "^25.3.1",
     "ts-node": "^10.0.0",
     "tsconfig-paths": "^3.9.0"
-  },
-  "peerDependencies": {
-    "connected-react-router": "^6.9.1",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-redux": "^7.2.1",
-    "react-router-dom": "^5.2.0",
-    "redux": "^4.1.0"
   },
   "repository": {
     "type": "git",
